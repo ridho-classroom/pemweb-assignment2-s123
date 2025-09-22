@@ -2,6 +2,13 @@
 
 Make sure to read the entire assignment description before starting the implementation. Review the concepts of HTML5, CSS3, and JavaScript beforehand (using MDN as a reference is recommended). Since this submission requires Git, you should also familiarize yourself with how to use it effectively.
 
+## Table of Content
+
+- [Project Overview](#-project-overview)
+- [Functional Requirements](#-functional-requirements)
+- [Non Functional Requirements](#-non-functional-requirements)
+- [Logistic Details](#logistic-details)
+
 ## 🎯 Project Overview
 
 Create a responsive weather dashboard that demonstrates HTML5 semantics, CSS3 responsive design, and modern JavaScript with real-time API integration. This project uses the free OpenWeatherMap API to display current weather, forecasts, and location-based weather data.
