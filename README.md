@@ -99,9 +99,9 @@ Create a responsive weather dashboard that demonstrates HTML5 semantics, CSS3 re
 
 ## Logistic Details
 
-### Working Time Limit
+### Cut-off Time
 
-24 September 2025, from 13.00 to 18.00 (maximum 5 hours)
+30 September 2025, 23.55
 
 ### Way of Working
 
