@@ -1,0 +1,366 @@
+/* --- 1. CSS Custom Properties (Variables) & Theme (FR-5) --- */
+:root {
+    /* Base Colors (Light Theme Default) */
+    --color-primary: #1e88e5; /* Biru langit */
+    --color-secondary: #00bcd4; /* Cyan lembut */
+    --color-background-start: #eef4f9; /* Gradien Light Mode Start */
+    --color-background-end: #f7faff; /* Gradien Light Mode End */
+    --color-text: #2c3e50; /* Teks gelap */
+    --color-card-bg: rgba(255, 255, 255, 0.9); /* Card semi-transparan putih */
+    --color-border: #dcdcdc;
+    --color-error: #e74c3c;
+    --star-color: #f1c40f; 
+    --spacing-unit: 8px;
+    --border-radius-lg: 16px;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.1); 
+}
+
+/* 🚀 DARK MODE REVISI FINAL: Kontras Teks Penuh */
+.dark-theme {
+    /* Background Lebih Dalam dan Kontras */
+    --color-background-start: #121927;
+    --color-background-end: #0a0e14;
+    
+    --color-primary: #8bc34a; /* Hijau Lemon (Aksen yang menonjol) */
+    --color-secondary: #00bcd4;
+    --color-text: #f0f4f8; /* Teks utama menjadi putih terang */
+    
+    /* Card Background: Kontras dengan background gelap (Frosted Glass Dark) */
+    --color-card-bg: rgba(30, 41, 59, 0.9);
+    --color-border: #334155; 
+    
+    /* Shadow yang Lebih Menonjol untuk Efek Mengangkat */
+    --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Penyesuaian Header agar menyatu dengan Dark Theme */
+.dark-theme header {
+    background-color: rgba(18, 25, 39, 0.95);
+    border-bottom-color: #334155;
+}
+
+/* --- PERBAIKAN TEKS DARK MODE SPESIFIK FINAL: Memastikan semua teks terlihat --- */
+.dark-theme h1, 
+.dark-theme h2, 
+.dark-theme h3, 
+.dark-theme h4, /* TARGET JUDUL: Pencarian Terbaru, Lokasi Favorit */
+.dark-theme p, 
+.dark-theme span,
+.dark-theme a,
+.dark-theme .detail-item,
+.dark-theme #current-unit { 
+    color: var(--color-text) !important; 
+}
+
+/* Teks input dan placeholder di Dark Mode */
+.dark-theme #city-input {
+    color: var(--color-text); 
+}
+.dark-theme #city-input::placeholder {
+    color: rgba(240, 244, 248, 0.6); 
+}
+
+/* Teks suhu dan ikon harus tetap menggunakan warna aksen */
+.dark-theme .main-details .temperature,
+.dark-theme .detail-item i {
+    color: var(--color-primary) !important; 
+}
+/* --------------------------------------------------------------------- */
+
+
+/* --- ANIMASI LATAR BELAKANG --- */
+@keyframes background-pan {
+  from { background-position: 0% 0%; }
+  to { background-position: 100% 100%; }
+}
+
+/* --- 2. Mobile-First Base Styles --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--color-text);
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--color-background-start), var(--color-background-end));
+    background-size: 400% 400%;
+    animation: background-pan 30s ease infinite alternate;
+    transition: color 0.4s ease, background 0.4s ease;
+}
+
+#app-container {
+    padding: 0 calc(var(--spacing-unit) * 3);
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(var(--spacing-unit) * 3) 0;
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(5px); 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--color-background-start);
+    transition: background-color 0.4s;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+/* Toggles & Tombol */
+.icon-btn {
+    background-color: var(--color-card-bg); 
+    border: none;
+    box-shadow: var(--shadow-soft);
+    color: var(--color-text);
+    cursor: pointer;
+    width: 44px; 
+    height: 44px;
+    border-radius: 50%;
+    margin-left: var(--spacing-unit);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-3px); 
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.icon-btn:active {
+    transform: translateY(1px); 
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Form (FR-2) */
+.search-section {
+    padding-bottom: calc(var(--spacing-unit) * 3);
+}
+
+#search-form {
+    display: flex;
+    gap: var(--spacing-unit);
+    background-color: var(--color-card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: var(--spacing-unit) * 1.5;
+}
+
+#city-input {
+    flex-grow: 1;
+    padding: var(--spacing-unit);
+    border: none; 
+    background: none;
+    color: var(--color-text);
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    box-shadow: none;
+    margin-left: 0; 
+}
+
+/* Card General Style (Frosted Glass Look) */
+.weather-card, .forecast-card, .recent-searches, .favorites-container {
+    background-color: var(--color-card-bg); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    border-radius: var(--border-radius-lg);
+    padding: calc(var(--spacing-unit) * 4);
+    margin-top: calc(var(--spacing-unit) * 2);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Current Weather (FR-1) */
+.current-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: calc(var(--spacing-unit) * 2);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.star-btn {
+    color: var(--star-color); 
+    background: none;
+    box-shadow: none;
+}
+.star-btn:hover {
+    transform: scale(1.1);
+}
+
+.main-details {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-details .temperature {
+    font-size: 6rem; 
+    font-weight: 300; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); 
+    color: var(--color-primary);
+    line-height: 1;
+}
+
+#weather-icon {
+    width: 120px;
+    height: 120px;
+}
+
+#weather-condition {
+    font-size: 1.2rem;
+    color: var(--color-secondary);
+    margin-top: var(--spacing-unit);
+    margin-bottom: calc(var(--spacing-unit) * 3);
+}
+
+.additional-details {
+    padding-top: calc(var(--spacing-unit) * 2);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 1.5);
+}
+
+.detail-item i {
+    color: var(--color-primary);
+    margin-right: var(--spacing-unit);
+}
+
+/* Loading and Error States (FR-5) */
+.hidden {
+    display: none !important;
+}
+
+.loading-spinner, .error-message {
+    text-align: center;
+    padding: calc(var(--spacing-unit) * 4);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.error-message {
+    color: var(--color-error);
+}
+
+/* History & Favorites Tags (Interaktif & Menarik) */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 1.5); 
+    margin-top: calc(var(--spacing-unit) * 1.5);
+    padding-top: var(--spacing-unit);
+}
+
+.city-tag {
+    /* Efek tombol 3D yang menonjol */
+    background: var(--color-primary);
+    box-shadow: 0 4px 0 var(--color-secondary); 
+    color: white;
+    border: none;
+    padding: 10px 18px; 
+    border-radius: 8px; 
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.3s ease;
+    transform: translateY(0);
+}
+
+.city-tag:hover {
+    background: var(--color-secondary); 
+    transform: translateY(-1px);
+    box-shadow: 0 5px 0 var(--color-primary);
+}
+
+.city-tag:active {
+    /* Efek tombol "tertekan" ke bawah */
+    box-shadow: 0 1px 0 var(--color-secondary);
+    transform: translateY(3px); 
+}
+
+/* Penyesuaian Dark Mode untuk Tags */
+.dark-theme .city-tag {
+    background: var(--color-primary); 
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4); 
+}
+
+.dark-theme .city-tag:hover {
+    background: #689f38; 
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.6);
+}
+
+/* Forecast (FR-3) */
+.daily-cards-container {
+    display: flex; 
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+    margin-top: calc(var(--spacing-unit) * 2);
+}
+
+.forecast-card {
+    text-align: center;
+    cursor: pointer;
+    /* Perbaikan LIGHT MODE: Background abu-abu muda solid agar ikon awan terlihat */
+    background-color: #e9eff5; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.forecast-card:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    background-color: #dfe6ee;
+}
+
+.dark-theme .forecast-card {
+    background-color: rgba(30, 41, 59, 0.9); /* Mengambil dari --color-card-bg dark theme */
+    border: 1px solid rgba(51, 65, 85, 0.5); 
+}
+
+.forecast-card h3 {
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+}
+
+/* --- 3. Media Queries (Responsiveness) --- */
+@media (min-width: 768px) {
+    #app-container {
+        padding: 0 calc(var(--spacing-unit) * 6);
+    }
+    
+    .additional-details {
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .detail-item {
+        flex-basis: 48%; 
+    }
+    
+    .daily-cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: calc(var(--spacing-unit) * 3);
+    }
+}
