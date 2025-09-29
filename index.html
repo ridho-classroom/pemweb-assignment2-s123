@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather Dashboard - Prakiraan Cuaca Real-time">
+    <title>Weather Dashboard</title>
+    
+    <!-- Link ke CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome untuk ikon (opsional, bisa pakai ikon dari API) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Container utama -->
+    <div class="container">
+        
+        <!-- Header dengan title dan toggle -->
+        <header class="header">
+            <h1 class="title">
+                <i class="fas fa-cloud-sun"></i> Weather Dashboard
+            </h1>
+            
+            <!-- Toggle untuk dark mode dan unit -->
+            <div class="settings">
+                <button id="themeToggle" class="btn-icon" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="unitToggle" class="btn-unit" aria-label="Toggle temperature unit">
+                    °C
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <section class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="citySearch" 
+                    class="search-input" 
+                    placeholder="Cari kota..."
+                    aria-label="Cari kota"
+                >
+                <button id="searchBtn" class="btn-search" aria-label="Cari">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="locationBtn" class="btn-location" aria-label="Gunakan lokasi saya">
+                    <i class="fas fa-location-crosshairs"></i>
+                </button>
+            </div>
+            
+            <!-- Autocomplete dropdown (akan di-populate dengan JS) -->
+            <div id="autocomplete" class="autocomplete-list hidden"></div>
+            
+            <!-- Riwayat pencarian -->
+            <div id="searchHistory" class="search-history hidden"></div>
+        </section>
+
+        <!-- Loading state -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Memuat data cuaca...</p>
+        </div>
+
+        <!-- Error message -->
+        <div id="errorMessage" class="error-message hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="errorText"></span>
+        </div>
+
+        <!-- Current Weather Section (FR-1) -->
+        <section id="currentWeather" class="current-weather hidden">
+            <div class="current-header">
+                <div class="location-info">
+                    <h2 id="cityName" class="city-name">Loading...</h2>
+                    <p id="country" class="country">--</p>
+                    <p id="dateTime" class="date-time">--</p>
+                </div>
+                <button id="favoriteBtn" class="btn-favorite" aria-label="Tambah ke favorit">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+
+            <div class="current-main">
+                <div class="temperature-section">
+                    <img id="weatherIcon" src="" alt="Weather icon" class="weather-icon">
+                    <div class="temp-wrapper">
+                        <h1 id="temperature" class="temperature">--°</h1>
+                        <p id="description" class="description">--</p>
+                    </div>
+                </div>
+
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <i class="fas fa-temperature-half"></i>
+                        <div>
+                            <span class="detail-label">Terasa Seperti</span>
+                            <span id="feelsLike" class="detail-value">--°</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-droplet"></i>
+                        <div>
+                            <span class="detail-label">Kelembapan</span>
+                            <span id="humidity" class="detail-value">--%</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-wind"></i>
+                        <div>
+                            <span class="detail-label">Kecepatan Angin</span>
+                            <span id="windSpeed" class="detail-value">-- km/h</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-compass"></i>
+                        <div>
+                            <span class="detail-label">Tekanan</span>
+                            <span id="pressure" class="detail-value">-- hPa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5-Day Forecast Section (FR-3) -->
+        <section id="forecast" class="forecast-section hidden">
+            <h2 class="section-title">Prakiraan 5 Hari</h2>
+            <div id="forecastCards" class="forecast-grid">
+                <!-- Cards akan di-generate dengan JavaScript -->
+            </div>
+        </section>
+
+        <!-- Lokasi Favorit -->
+        <section id="favorites" class="favorites-section hidden">
+            <h2 class="section-title">Lokasi Favorit</h2>
+            <div id="favoritesList" class="favorites-list">
+                <!-- Favorites akan di-generate dengan JavaScript -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modal untuk detail forecast -->
+    <div id="forecastModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Tutup modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalBody" class="modal-body">
+                <!-- Detail forecast akan di-populate dengan JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Link ke JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
