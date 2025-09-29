@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Weather Dashboard</title>
+
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+  <div class="app" id="app">
+<header class="header" role="banner">
+  <h1 class="app-title">🌦️ Weather Dashboard</h1>
+
+      <div class="controls" role="search" aria-label="Search weather by city">
+        <label class="visually-hidden" for="cityInput">Search city</label>
+        <div class="search-wrapper">
+          <input id="cityInput" class="search-input" type="search" placeholder="Search city (e.g. Jakarta)" aria-label="Search city" autocomplete="off" aria-autocomplete="list" aria-controls="suggestions" />
+          <button id="searchBtn" class="btn primary" aria-label="Search">Search</button>
+          <ul id="suggestions" class="suggestions" role="listbox" aria-label="Search suggestions" hidden></ul>
+        </div>
+
+        <button id="useLocationBtn" class="btn" title="Use my location" aria-label="Use my location">📍</button>
+
+        <div class="toggles" role="toolbar" aria-label="Preferences">
+          <button id="unitToggle" class="btn" aria-pressed="false" title="Toggle Celsius / Fahrenheit">°C</button>
+          <button id="themeToggle" class="btn" aria-pressed="false" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="status" class="status" aria-live="polite" aria-atomic="true"></section>
+
+      <section class="main-panel">
+        <article class="current-card" id="currentCard" aria-label="Current weather">
+          <div class="placeholder">
+            <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="Weather icon" class="placeholder-icon" />
+            <h2>Welcome 👋</h2>
+            <p>Showing default weather for <b>Jakarta</b></p>
+            <p class="small">Search for a city or use your location 📍</p>
+          </div>
+          <div class="loader" id="loader" hidden aria-hidden="true"></div>
+        </article>
+
+        <section class="forecast" id="forecast" aria-label="5 day forecast"></section>
+
+        <section class="aqi-card" id="aqiCard" aria-label="Air quality index"></section>
+      </section>
+
+      <aside class="sidebar" aria-label="Sidebar with favorites and history">
+        <div class="favorites" aria-label="Favorites">
+          <h3>Favorites</h3>
+          <ul id="favoritesList"><li class="small">No favorites</li></ul>
+        </div>
+
+        <div class="history" aria-label="Search history">
+          <h3>History</h3>
+          <ul id="historyList"><li class="small">No history</li></ul>
+          <button id="clearHistoryBtn" class="small">Clear history</button>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <small>Data from OpenWeatherMap • Icons from OpenWeatherMap</small>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="assertive" hidden></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
