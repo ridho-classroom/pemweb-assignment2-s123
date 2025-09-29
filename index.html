@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Modern weather dashboard with real-time data and responsive design">
+  <title>Weather Dashboard - Real-time Weather Data</title>
+
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="logo">🌤️ Weather Dashboard</h1>
+      <div class="controls">
+        <button id="theme-toggle" class="btn" aria-label="Toggle theme">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Dark</span>
+        </button>
+        <button id="units-toggle" class="btn" aria-label="Toggle temperature units">
+          <span id="units-text">°F</span>
+        </button>
+        <button id="location-btn" class="btn" aria-label="Get current location weather">
+          <span>📍</span>
+          <span>My Location</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="search-section" aria-label="Weather search">
+        <div class="search-container">
+          <input type="text" id="search-input" class="search-input" placeholder="Search for a city..."
+            aria-label="Search for city weather" autocomplete="off">
+          <div id="search-suggestions" class="search-suggestions" style="display: none;" role="listbox"></div>
+        </div>
+      </section>
+
+      <div id="loading" class="loading" style="display: none;" role="status" aria-live="polite">
+        <div class="spinner"></div>
+        <p>Loading weather data...</p>
+      </div>
+
+      <div id="error-message" class="error" style="display: none;" role="alert" aria-live="assertive"></div>
+
+      <section class="weather-grid" id="current-weather-section" style="display: none;">
+        <article class="weather-card current-weather" id="current-weather">
+          <div class="location" id="current-location">Loading...</div>
+          <img class="weather-icon" id="current-icon" alt="Weather icon">
+          <div class="temperature" id="current-temp">--°</div>
+          <div class="condition" id="current-condition">Loading...</div>
+          <div class="weather-details" id="weather-details">
+            <!-- Dynamic content -->
+          </div>
+          <button id="add-favorite" class="btn" style="margin-top: 1rem; background: rgba(255,255,255,0.2);">
+            ⭐ Add to Favorites
+          </button>
+        </article>
+      </section>
+
+      <section class="forecast-section" id="forecast-section" style="display: none;">
+        <h2 class="section-title">5-Day Forecast</h2>
+        <div class="forecast-grid" id="forecast-grid">
+          <!-- Dynamic content -->
+        </div>
+      </section>
+
+      <section class="favorites-section" id="favorites-section">
+        <h2 class="section-title">Favorite Locations</h2>
+        <div class="favorites-grid" id="favorites-grid">
+          <!-- Dynamic content -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Link to external JavaScript file -->
+  <script src="script.js"></script>
+</body>
+
+</html>
