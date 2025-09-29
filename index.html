@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cuaca Dinamis & Interaktif</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container" class="light-theme">
+        
+        <header>
+            <div class="header-content">
+                <h1>🌤️ Dashboard Cuaca</h1>
+                <div class="controls">
+                    <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode">
+                        <i class="fas fa-sun"></i> 
+                    </button>
+                    <button id="unit-toggle" class="icon-btn" title="Toggle Satuan Suhu">
+                        <span id="current-unit">°C</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="search-section">
+                <form id="search-form">
+                    <input type="text" id="city-input" placeholder="Cari kota (mis: Jakarta, London)" required>
+                    <button type="submit" class="icon-btn search-btn"><i class="fas fa-search"></i></button>
+                </form>
+                
+                <div id="search-history" class="recent-searches">
+                    </div>
+            </section>
+
+            <div id="loading-spinner" class="loading-spinner hidden">
+                <i class="fas fa-sync fa-spin"></i> Memuat Data...
+            </div>
+
+            <p id="error-message" class="error-message hidden"></p>
+
+            <section id="current-weather-section" class="weather-card hidden">
+                <div class="current-header">
+                    <h2 id="location-name">Memuat Lokasi...</h2>
+                    <button id="favorite-btn" class="icon-btn star-btn" title="Tambah ke Favorit">
+                        <i class="far fa-star"></i>
+                    </button>
+                </div>
+
+                <div class="main-details">
+                    <img id="weather-icon" src="" alt="Kondisi Cuaca Saat Ini">
+                    <div class="temperature-group">
+                        <span id="current-temp" class="temperature">--</span>
+                    </div>
+                    <p id="weather-condition" class="condition">Kondisi Cuaca</p>
+                </div>
+
+                <div class="additional-details">
+                    <div class="detail-item"><i class="fas fa-thermometer-half"></i> Terasa Seperti: <span id="feels-like">--</span></div>
+                    <div class="detail-item"><i class="fas fa-wind"></i> Angin: <span id="wind-speed">--</span></div>
+                    <div class="detail-item"><i class="fas fa-tint"></i> Kelembaban: <span id="humidity">--</span></div>
+                    <div class="detail-item"><i class="fas fa-sun"></i> Terbit: <span id="sunrise">--</span></div>
+                    <div class="detail-item"><i class="fas fa-moon"></i> Terbenam: <span id="sunset">--</span></div> </div>
+            </section>
+            
+            <section class="favorites-container">
+                <h4>Lokasi Favorit Anda:</h4>
+                <div id="favorites-list" class="tags-container">
+                    </div>
+            </section>
+
+            <section id="forecast-section" class="forecast-list hidden">
+                <h2>Prakiraan 5 Hari</h2>
+                <div id="forecast-container" class="daily-cards-container">
+                    </div>
+            </section>
+        </main>
+
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
