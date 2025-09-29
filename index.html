@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard - Professional Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <i class="fas fa-cloud-sun"></i>
+                Weather Dashboard
+            </h1>
+            <div class="controls">
+                <button class="unit-toggle" id="unitToggle">
+                    <span id="unitDisplay">°C</span>
+                </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search for a city...">
+                    <button id="searchButton" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+            <div class="favorites">
+                <h3>Quick Access</h3>
+                <div class="favorite-cities" id="favoriteCities"></div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-spinner">
+                <div class="pulse"></div>
+                <p>Fetching weather data...</p>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p id="errorText"></p>
+            <button id="retryButton" class="retry-button">Try Again</button>
+        </div>
+
+        <!-- Main Weather Card -->
+        <div class="weather-card" id="weatherCard">
+            <div class="weather-main">
+                <div class="weather-info">
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="locationName">--</span>
+                        <button class="location-refresh-btn" id="locationRefreshBtn" title="Refresh Location">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="favorite-btn" id="favoriteBtn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="temperature">
+                        <span id="currentTemp">--</span>
+                        <span class="temp-unit">°</span>
+                    </div>
+                    <div class="weather-condition">
+                        <span id="weatherDescription">--</span>
+                    </div>
+                    <div class="feels-like">
+                        Feels like <span id="feelsLike">--</span>°
+                    </div>
+                </div>
+                <div class="weather-icon-container">
+                    <img id="weatherIcon" src="" alt="Weather Icon" class="weather-icon">
+                </div>
+            </div>
+            
+            <!-- Weather Details -->
+            <div class="weather-details">
+                <div class="detail-item">
+                    <i class="fas fa-eye"></i>
+                    <span class="detail-label">Visibility</span>
+                    <span id="visibility" class="detail-value">-- km</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-tint"></i>
+                    <span class="detail-label">Humidity</span>
+                    <span id="humidity" class="detail-value">--%</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-wind"></i>
+                    <span class="detail-label">Wind Speed</span>
+                    <span id="windSpeed" class="detail-value">-- km/h</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-thermometer-half"></i>
+                    <span class="detail-label">Pressure</span>
+                    <span id="pressure" class="detail-value">-- hPa</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-sun"></i>
+                    <span class="detail-label">UV Index</span>
+                    <span id="uvIndex" class="detail-value">--</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-cloud"></i>
+                    <span class="detail-label">Clouds</span>
+                    <span id="cloudiness" class="detail-value">--%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5-Day Forecast -->
+        <div class="forecast-section">
+            <h2 class="forecast-title">5-Day Forecast</h2>
+            <div class="forecast-container" id="forecastContainer">
+                <!-- Forecast items will be dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Search History -->
+        <div class="history-section">
+            <h3>Recent Searches</h3>
+            <div class="search-history" id="searchHistory"></div>
+        </div>
+    </div>
+
+    <!-- Weather Detail Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Weather Details</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
