@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☁️Weather Web</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">☁️Weather Web</h1>
+            <div class="controls">
+                <button class="toggle-btn" id="unitToggle">°C</button>
+                <button class="toggle-btn" id="themeToggle">🌙</button>
+                <button class="toggle-btn" id="locationBtn">📍</button>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput" 
+                   placeholder="Search for a city...">
+            <div class="suggestions hidden" id="suggestions"></div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingMain" class="loading hidden">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Main Weather Display -->
+        <main class="main-weather" id="mainWeather">
+            <div class="location" id="currentLocation">London, UK</div>
+            <div class="current-temp" id="currentTemp">22°</div>
+            <div class="weather-desc" id="weatherDesc">Partly Cloudy</div>
+            <button class="toggle-btn" id="addToFavorites">⭐ Add to Favorites</button>
+            
+            <div class="weather-details">
+                <div class="detail-item">
+                    <div class="detail-label">Feels like</div>
+                    <div class="detail-value" id="feelsLike">25°</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Humidity</div>
+                    <div class="detail-value" id="humidity">65%</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Wind</div>
+                    <div class="detail-value" id="windSpeed">12 km/h</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">UV Index</div>
+                    <div class="detail-value" id="uvIndex">6</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Forecasts -->
+        <section class="forecast-section">
+            <h2 class="section-title">Hourly Forecast</h2>
+            <div class="hourly-forecast" id="hourlyForecast"></div>
+        </section>
+
+        <section class="forecast-section">
+            <h2 class="section-title">5-Day Forecast</h2>
+            <div class="forecast-container" id="forecastContainer"></div>
+        </section>
+
+        <!-- Favorites -->
+        <section class="favorites">
+            <h2 class="section-title">Favorite Locations</h2>
+            <div class="favorites-grid" id="favoritesGrid"></div>
+        </section>
+    </div>
+
+    <script src="weather.js"></script>
+</body>
+</html>
