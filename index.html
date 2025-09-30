@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Cuaca Gimank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">
+                <i class="fa-solid fa-smog"></i>
+                Rutbir Weather
+            </h1>
+            <div class="header-controls">
+                <button class="btn-toggle" id="unitToggle" aria-label="Toggle temperature unit">°C</button>
+                <button class="btn-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for a city..." autocomplete="off">
+                <button id="searchBtn" class="search-btn" aria-label="Search">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                </button>
+                <button id="locationBtn" class="location-btn" aria-label="Use current location">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="searchSuggestions" class="search-suggestions"></div>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state hidden">
+            <div class="spinner"></div>
+            <p>Loading weather data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="error-state hidden">
+            <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4m0 4h.01"/>
+            </svg>
+            <h2>Oops!</h2>
+            <p id="errorMessage">Something went wrong</p>
+            <button id="retryBtn" class="btn-primary">Try Again</button>
+        </div>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="main-content hidden">
+            <!-- Current Weather -->
+            <section class="current-weather">
+                <div class="location-info">
+                    <h2 id="locationName">Loading...</h2>
+                    <p id="currentDate">Loading...</p>
+                </div>
+                <div class="weather-main">
+                    <img id="weatherIcon" class="weather-icon-large" src="" alt="Weather icon">
+                    <div class="temperature-display">
+                        <h1 id="currentTemp" class="temperature">--°</h1>
+                        <p id="weatherDescription" class="weather-desc">Loading...</p>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                        <div>
+                            <p class="detail-label">Feels like</p>
+                            <p id="feelsLike" class="detail-value">--°</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                        <div>
+                            <p class="detail-label">Humidity</p>
+                            <p id="humidity" class="detail-value">--%</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+                        </svg>
+                        <div>
+                            <p class="detail-label">Wind Speed</p>
+                            <p id="windSpeed" class="detail-value">-- km/h</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="favoriteBtn" class="btn-favorite" aria-label="Add to favorites">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    <span>Add to Favorites</span>
+                </button>
+            </section>
+
+            <!-- Forecast Section -->
+            <section class="forecast-section">
+                <h2 class="section-title">5-Day Forecast</h2>
+                <div id="forecastContainer" class="forecast-container">
+                    <!-- Forecast cards will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Favorites Section -->
+            <section class="favorites-section">
+                <h2 class="section-title">Favorite Locations</h2>
+                <div id="favoritesContainer" class="favorites-container">
+                    <p class="empty-state">No favorite locations yet</p>
+                </div>
+            </section>
+
+            <!-- Recent Searches -->
+            <section class="recent-section">
+                <h2 class="section-title">Recent Searches</h2>
+                <div id="recentSearches" class="recent-searches">
+                    <p class="empty-state">No recent searches</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Forecast Details -->
+    <div id="forecastModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2 id="modalDate">Details</h2>
+            <img id="modalIcon" class="weather-icon-large" src="" alt="Weather icon">
+            <div class="modal-info">
+                <p><strong>Temperature:</strong> <span id="modalTemp">--°</span></p>
+                <p><strong>Feels Like:</strong> <span id="modalFeels">--°</span></p>
+                <p><strong>Condition:</strong> <span id="modalCondition">--</span></p>
+                <p><strong>Humidity:</strong> <span id="modalHumidity">--%</span></p>
+                <p><strong>Wind:</strong> <span id="modalWind">-- km/h</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
