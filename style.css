@@ -1,0 +1,875 @@
+/* 
+   ===========================================
+   RESET & BASE STYLES
+   ===========================================
+   - Menghapus default margin/padding browser
+   - Set box-sizing ke border-box untuk sizing yang konsisten
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 
+   ===========================================
+   CSS CUSTOM PROPERTIES (CSS Variables)
+   ===========================================
+   - Menyimpan nilai warna dan ukuran yang sering dipakai
+   - Memudahkan maintenance dan tema switching
+   - Menggunakan prefix --bg untuk background, --text untuk text, dll
+*/
+:root {
+  /* Light Theme Colors */
+  --bg-light: #f3f4f6; /* Background utama light mode */
+  --bg-dark: #111827; /* Background utama dark mode */
+  --card-light: #ffffff; /* Background card light mode */
+  --card-dark: rgba(
+    31,
+    41,
+    55,
+    0.5
+  ); /* Background card dark mode dengan transparansi */
+  --text-light: #111827; /* Text primary light mode */
+  --text-dark: #f9fafb; /* Text primary dark mode */
+  --text-secondary-light: #6b7280; /* Text secondary light mode */
+  --text-secondary-dark: #9ca3af; /* Text secondary dark mode */
+
+  /* Accent Colors */
+  --purple: #8b5cf6; /* Primary accent color */
+  --red: #ef4444; /* Error/favorite color */
+  --yellow: #f59e0b; /* Sunrise color */
+  --orange: #f97316; /* Sunset color */
+
+  /* Border Colors */
+  --border-light: #e5e7eb; /* Border light mode */
+  --border-dark: rgba(75, 85, 99, 0.5); /* Border dark mode */
+}
+
+/* 
+   ===========================================
+   BODY & CONTAINER
+   ===========================================
+   - Setup font family system fonts untuk performance
+   - Background dan color menggunakan CSS variables
+   - Transition untuk smooth theme switching
+*/
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-light); /* Default light mode */
+  color: var(--text-light);
+  transition: all 0.3s ease; /* Smooth transition saat theme switch */
+  min-height: 100vh;
+}
+
+/* 
+   Dark mode styles - diterapkan saat body memiliki class 'dark'
+   JavaScript akan toggle class ini untuk switch theme
+*/
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* Container utama dengan max-width dan centering */
+.container {
+  max-width: 1200px; /* Maksimum lebar untuk desktop */
+  margin: 0 auto; /* Center alignment */
+  padding: 2rem 1rem; /* Padding responsive */
+}
+
+/* 
+   ===========================================
+   HEADER STYLES
+   ===========================================
+   - Flexbox layout yang responsive
+   - Mobile-first approach: column pada mobile, row pada desktop
+*/
+.header {
+  display: flex;
+  flex-direction: column; /* Stack vertical pada mobile */
+  gap: 1rem; /* Spacing antar elements */
+  margin-bottom: 2rem;
+}
+
+/* Media query untuk tablet dan desktop */
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row; /* Horizontal layout pada desktop */
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* 
+   Logo dengan icon SVG
+   - Flexbox untuk alignment icon dan text
+*/
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--purple); /* Menggunakan accent color */
+}
+
+/* 
+   ===========================================
+   SEARCH CONTAINER
+   ===========================================
+   - Position relative untuk absolute positioning icon
+   - Flex-grow untuk mengambil space yang tersedia
+*/
+.search-container {
+  flex: 1; /* Grow untuk mengambil available space */
+  max-width: 400px; /* Limit maksimum width */
+  position: relative; /* Untuk positioning search icon */
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem; /* Extra left padding untuk icon */
+  border: 1px solid var(--border-light);
+  border-radius: 9999px; /* Fully rounded corners */
+  background: #f9fafb; /* Subtle background */
+  font-size: 1rem;
+  transition: all 0.3s ease; /* Smooth transitions */
+}
+
+/* Dark mode styles untuk search input */
+body.dark .search-input {
+  background: rgba(31, 41, 55, 0.5); /* Semi-transparent background */
+  border-color: var(--border-dark);
+  color: var(--text-dark);
+}
+
+/* Focus state dengan purple accent */
+.search-input:focus {
+  outline: none; /* Remove default outline */
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1); /* Subtle glow effect */
+}
+
+/* Search icon positioning */
+.search-icon {
+  position: absolute;
+  left: 0.75rem; /* 12px dari kiri */
+  top: 50%;
+  transform: translateY(-50%); /* Perfect vertical centering */
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary-light);
+}
+
+body.dark .search-icon {
+  color: var(--text-secondary-dark);
+}
+
+/* 
+   ===========================================
+   CONTROLS & BUTTONS
+   ===========================================
+   - Flex layout untuk button controls
+   - Hover effects dan transitions
+*/
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Base button styles */
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Space between icon dan text */
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--text-secondary-light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+body.dark .btn {
+  color: var(--text-secondary-dark);
+}
+
+/* Button hover effects */
+.btn:hover {
+  background: #f3f4f6;
+  color: var(--text-light);
+}
+
+body.dark .btn:hover {
+  background: rgba(31, 41, 55, 0.8);
+  color: var(--text-dark);
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* 
+   Theme toggle button khusus dengan dual icons
+   - Menggunakan position relative/absolute untuk icon switching
+*/
+.theme-toggle {
+  position: relative;
+  padding: 0.5rem;
+  width: 40px; /* Fixed width untuk consistent sizing */
+  height: 40px;
+}
+
+.theme-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease; /* Smooth icon transitions */
+}
+
+/* 
+   Icon visibility logic:
+   - Light mode: show sun, hide moon
+   - Dark mode: hide sun, show moon
+   - Menggunakan opacity dan transform untuk smooth animation
+*/
+.sun-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+.moon-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scale(0);
+}
+
+body.dark .sun-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(0);
+}
+
+body.dark .moon-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+/* 
+   ===========================================
+   MAIN GRID LAYOUT
+   ===========================================
+   - CSS Grid untuk 2-column layout
+   - Single column pada mobile, 2-column pada desktop
+   - 2fr 1fr ratio = main content lebih lebar dari sidebar
+*/
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column pada mobile */
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .main-grid {
+    grid-template-columns: 2fr 1fr; /* 2-column layout pada desktop */
+  }
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* 
+   ===========================================
+   CARD STYLES
+   ===========================================
+   - Base card styling dengan subtle shadow
+   - Backdrop-filter untuk glassmorphism effect pada dark mode
+*/
+.card {
+  background: var(--card-light);
+  border-radius: 1rem; /* 16px rounded corners */
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: all 0.3s ease;
+}
+
+body.dark .card {
+  background: var(--card-dark); /* Semi-transparent pada dark mode */
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+}
+
+/* 
+   ===========================================
+   WEATHER CARD COMPONENTS
+   ===========================================
+*/
+
+/* Header section dengan location dan favorite button */
+.weather-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.weather-location {
+  color: var(--text-secondary-light);
+  font-size: 0.875rem; /* 14px */
+}
+
+body.dark .weather-location {
+  color: var(--text-secondary-dark);
+}
+
+.location-name {
+  font-size: 1.5rem; /* 24px */
+  font-weight: bold;
+  margin-top: 0.25rem;
+}
+
+/* 
+   Favorite button dengan heart icon
+   - Hover effect dan active state
+*/
+.favorite-btn {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-secondary-light);
+  transition: all 0.3s ease;
+}
+
+body.dark .favorite-btn {
+  color: var(--text-secondary-dark);
+}
+
+.favorite-btn:hover {
+  color: var(--red);
+}
+
+.favorite-btn.active {
+  color: var(--red); /* Red saat active/favorited */
+}
+
+.favorite-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* 
+   Main weather display section
+   - Flexbox layout yang responsive
+   - Column pada mobile, row pada desktop
+*/
+.weather-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+@media (min-width: 768px) {
+  .weather-main {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.weather-visual {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.weather-emoji {
+  font-size: 5rem; /* 80px - large emoji */
+}
+
+.temperature-info {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .temperature-info {
+    text-align: left; /* Left align pada desktop */
+  }
+}
+
+.temperature {
+  font-size: 4rem; /* 64px - large temperature */
+  font-weight: bold;
+  line-height: 1; /* Tight line height */
+}
+
+.condition {
+  font-size: 1.125rem; /* 18px */
+  color: var(--text-secondary-light);
+  text-transform: capitalize; /* Capitalize first letter */
+  margin-top: 0.5rem;
+}
+
+body.dark .condition {
+  color: var(--text-secondary-dark);
+}
+
+.feels-like {
+  font-size: 1.125rem;
+  color: var(--text-secondary-light);
+  margin-top: 1rem;
+}
+
+body.dark .feels-like {
+  color: var(--text-secondary-dark);
+}
+
+/* 
+   ===========================================
+   WEATHER DETAILS GRID
+   ===========================================
+   - CSS Grid untuk detail items
+   - 2 columns pada mobile, 4 columns pada desktop
+   - Border top sebagai visual separator
+*/
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columns pada mobile */
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
+}
+
+body.dark .details-grid {
+  border-color: var(--border-dark);
+}
+
+@media (min-width: 640px) {
+  .details-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns pada desktop */
+  }
+}
+
+/* Individual detail item dengan icon dan info */
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.detail-icon-container {
+  background: #f3f4f6; /* Light background untuk icon */
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+body.dark .detail-icon-container {
+  background: rgba(75, 85, 99, 0.5);
+}
+
+.detail-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--purple); /* Purple accent untuk icons */
+}
+
+.detail-info {
+  flex: 1;
+}
+
+.detail-label {
+  font-size: 0.875rem; /* 14px */
+  color: var(--text-secondary-light);
+}
+
+body.dark .detail-label {
+  color: var(--text-secondary-dark);
+}
+
+.detail-value {
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+body.dark .detail-value {
+  color: var(--text-dark);
+}
+
+/* 
+   ===========================================
+   SUN TIMES SECTION
+   ===========================================
+   - Flex layout untuk sunrise/sunset info
+   - Border top separator dengan centered content
+*/
+.sun-times {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-secondary-light);
+}
+
+body.dark .sun-times {
+  border-color: var(--border-dark);
+  color: var(--text-secondary-dark);
+}
+
+.sun-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sun-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sunrise-icon {
+  color: var(--yellow); /* Yellow untuk sunrise */
+}
+
+.sunset-icon {
+  color: var(--orange); /* Orange untuk sunset */
+}
+
+/* 
+   ===========================================
+   FORECAST SECTION
+   ===========================================
+*/
+.forecast-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.forecast-title {
+  font-size: 1.25rem; /* 20px */
+  font-weight: bold;
+}
+
+.forecast-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--purple);
+}
+
+.forecast-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 
+   Individual forecast item
+   - Flex layout untuk day, condition, dan temperature
+   - Hover effect untuk interactivity
+*/
+.forecast-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.forecast-item:hover {
+  background: #f9fafb; /* Light hover background */
+}
+
+body.dark .forecast-item:hover {
+  background: rgba(75, 85, 99, 0.5);
+}
+
+.forecast-day-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1; /* Take available space */
+}
+
+.forecast-emoji {
+  font-size: 2rem; /* 32px */
+}
+
+.forecast-day {
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+body.dark .forecast-day {
+  color: var(--text-dark);
+}
+
+.forecast-condition {
+  font-size: 0.875rem; /* 14px */
+  color: var(--text-secondary-light);
+  text-transform: capitalize;
+  text-align: center;
+  flex: 1;
+}
+
+body.dark .forecast-condition {
+  color: var(--text-secondary-dark);
+}
+
+.forecast-temps {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.forecast-high {
+  color: var(--text-light);
+}
+
+body.dark .forecast-high {
+  color: var(--text-dark);
+}
+
+.forecast-low {
+  color: var(--text-secondary-light);
+}
+
+body.dark .forecast-low {
+  color: var(--text-secondary-dark);
+}
+
+/* 
+   ===========================================
+   FAVORITES SECTION
+   ===========================================
+*/
+.favorites-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.favorites-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.heart-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--red);
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* 
+   Individual favorite item
+   - Hover effects dan group state untuk show/hide remove button
+*/
+.favorite-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.favorite-item:hover {
+  background: #f9fafb;
+}
+
+body.dark .favorite-item:hover {
+  background: rgba(75, 85, 99, 0.5);
+}
+
+.favorite-location {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.pin-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary-light);
+}
+
+body.dark .pin-icon {
+  color: var(--text-secondary-dark);
+}
+
+.favorite-item:hover .pin-icon {
+  color: var(--purple); /* Purple pada hover */
+}
+
+.favorite-name {
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+body.dark .favorite-name {
+  color: var(--text-dark);
+}
+
+.favorite-item:hover .favorite-name {
+  color: var(--purple); /* Purple pada hover */
+}
+
+/* 
+   Remove button yang muncul pada hover
+   - Opacity 0 default, opacity 1 pada parent hover
+*/
+.remove-btn {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--red);
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  transition: all 0.3s ease;
+}
+
+.favorite-item:hover .remove-btn {
+  opacity: 1; /* Show pada parent hover */
+}
+
+.remove-btn:hover {
+  background: rgba(239, 68, 68, 0.1); /* Light red background pada hover */
+}
+
+.remove-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* 
+   ===========================================
+   LOADING COMPONENT
+   ===========================================
+   - Flexbox centering untuk loading state
+   - CSS animation untuk spinner
+*/
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: var(--text-secondary-light);
+}
+
+body.dark .loading {
+  color: var(--text-secondary-dark);
+}
+
+/* 
+   Spinner animation
+   - CSS border trick untuk rotating spinner
+   - Keyframe animation untuk continuous rotation
+*/
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-light);
+  border-top: 4px solid var(--text-secondary-light);
+  border-radius: 50%; /* Perfect circle */
+  animation: spin 1s linear infinite; /* Continuous rotation */
+  margin-bottom: 1rem;
+}
+
+body.dark .spinner {
+  border-color: var(--border-dark);
+  border-top-color: var(--text-secondary-dark);
+}
+
+/* Keyframe untuk spinner rotation animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 
+   ===========================================
+   ERROR COMPONENT
+   ===========================================
+   - Error styling dengan red background
+   - Semi-transparent background pada dark mode
+*/
+.error {
+  background: rgba(239, 68, 68, 0.1); /* Light red background */
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--red);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+body.dark .error {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* 
+   ===========================================
+   UTILITY CLASSES
+   ===========================================
+*/
+.hidden {
+  display: none; /* Utility class untuk hide elements */
+}
+
+/* 
+   ===========================================
+   RESPONSIVE BREAKPOINTS SUMMARY
+   ===========================================
+   
+   Mobile First Approach:
+   - Default: Mobile styles (< 768px)
+   - 640px: Small desktop adjustments (sm)
+   - 768px: Tablet portrait (md)
+   - 1024px: Desktop (lg)
+   
+   Key Responsive Changes:
+   - Header: Column to row layout
+   - Main grid: 1 column to 2 column
+   - Weather main: Column to row
+   - Details grid: 2 columns to 4 columns
+   
+   Performance Notes:
+   - Menggunakan CSS Grid dan Flexbox untuk modern layout
+   - CSS variables untuk easy theme switching
+   - Minimal JavaScript manipulation untuk better performance
+   - Transitions untuk smooth interactions
+*/
