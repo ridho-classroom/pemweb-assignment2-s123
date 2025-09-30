@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="weather-app">
+        <div class="app-header">
+            <div class="app-title">MineWheater</div>
+            <div class="app-actions">
+                <button class="btn" id="darkModeToggle" title="Toggle Dark/Light">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <button class="btn" id="refresh-btn" title="Refresh">
+                    <i class='bx bx-refresh'></i>
+                </button>
+                <button class="btn" id="location-btn" title="Use my location">
+                    <i class='bx bx-current-location'></i>
+                </button>
+                <button class="btn favorite-btn" id="favorite-btn" title="Tambah ke Favorit">
+                   <i id="favorite-icon" class='bx bx-star'></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="search-input" 
+                placeholder="Search for a city..." 
+                autocomplete="off">
+             <ul id="suggestions" class="suggestions"></ul>
+            <button class="search-btn" id="search-btn">
+                <i class='bx bx-search'></i>
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading weather data...</div>
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="weather-display" id="weather-display">
+            <div class="location-row">
+                <div class="location" id="location">
+                    <i class='bx bx-map'></i>
+                    <span>Loading...</span>
+                </div>
+            </div>
+            <div class="date-time" id="date-time">--:--, --- --</div>
+            
+            <div class="current-weather">
+                <div class="current-weather-container">
+                    <div class="weather-main">
+                        <img class="weather-icon" id="weather-icon" src="" alt="Weather icon">
+                        <div class="temperature" id="temperature">
+                            <span class="temp-value">--</span>
+                            <span>°</span>
+                            <span class="temp-unit">C</span>
+                        </div>
+                        <div class="weather-description" id="weather-description">-- --</div>
+                    </div>
+        
+                    <div class="weather-details">
+                        <div class="detail-card">
+                            <i class='bx bxs-thermometer detail-icon'></i>
+                            <div class="detail-value" id="feels-like">--°</div>
+                            <div class="detail-label">Feels Like</div>
+                        </div>
+                        <div class="detail-card">
+                            <i class='bx bxs-droplet-half detail-icon'></i>
+                            <div class="detail-value" id="humidity">--%</div>
+                            <div class="detail-label">Humidity</div>
+                        </div>
+                        <div class="detail-card">
+                            <i class='bx bx-wind detail-icon'></i>
+                            <div class="detail-value" id="wind-speed">-- km/h</div>
+                            <div class="detail-label">Wind Speed</div>
+                        </div>
+                        <div class="detail-card">
+                            <i class='bx bxs-sun detail-icon'></i>
+                            <div class="detail-value" id="uv-index">--</div>
+                            <div class="detail-label">UV Index</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="forecast-container">
+                <div class="forecast-title">6-Day Forecast</div>
+                <div class="forecast-items" id="forecast-items">
+                    <!-- Forecast items will be added here dynamically -->
+                </div>
+            </div>
+
+            <div class="unit-toggle">
+                <button class="unit-btn active" id="celsius-btn">°C</button>
+                <button class="unit-btn" id="fahrenheit-btn">°F</button>
+            </div>
+            
+            <div class="last-updated" id="last-updated">Last updated: --:--:--</div>
+        </div>
+            <section class="favorites-section">
+                <h3>⭐Favorit City</h3>
+                <ul id="favorites-list"></ul>
+            </section>
+    </div>
+
+    <script src="./interactive.js"></script>
+</body>
+</html>
