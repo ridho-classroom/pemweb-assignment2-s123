@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherMap - Aplikasi Prakiraan Cuaca</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body data-theme="light"> <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-cloud-sun"></i> WeatherMap </h1>
+            <p class="subtitle">Prakiraan Cuaca</p>
+        </header>
+        
+        <div class="toolbar">
+            <button id="toggleUnitBtn" title="Ubah Unit Suhu"><i class="fas fa-temperature-three-quarters"></i> C/F</button>
+            <button id="toggleThemeBtn" title="Ubah Tema"><i class="fas fa-moon"></i></button>
+        </div>
+        
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="cityInput" placeholder="Masukkan nama kota...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+                <button id="locationBtn" title="Gunakan lokasi saya"><i class="fas fa-location-arrow"></i></button>
+            </div>
+            <div id="autocompleteResults" class="autocomplete-results hidden"></div>
+        </div>
+
+        <div class="quick-access">
+            <button id="favoritesBtn" title="Lokasi Favorit"><i class="fas fa-heart"></i> Favorit</button>
+            <button id="historyBtn" title="Riwayat Pencarian"><i class="fas fa-history"></i> Riwayat</button>
+            <div id="quickListContainer" class="quick-list-container hidden">
+                <h3 id="quickListTitle"></h3>
+                <div id="quickListContent"></div>
+            </div>
+        </div>
+
+        <div class="loading hidden" id="loading">
+            <div class="spinner"></div>
+            <p>Mengambil data cuaca...</p>
+        </div>
+
+        <div class="error hidden" id="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p id="errorMessage">Terjadi kesalahan</p>
+        </div>
+
+        <div class="weather-info hidden" id="weatherInfo">
+            <div class="current-weather">
+                <div class="location">
+                    <h2 id="cityName">Jakarta 
+                        <span id="favStar" class="fav-star"><i class="far fa-star"></i></span>
+                    </h2>
+                    <p id="currentDate">Minggu, 28 September 2025</p>
+                </div>
+                
+                <div class="main-temp">
+                    <div class="temp-display">
+                        <span id="temperature">28</span>
+                        <span class="unit" id="tempUnit">°C</span>
+                    </div>
+                    <div class="weather-icon">
+                        <i id="weatherIcon" class="fas fa-sun"></i>
+                    </div>
+                </div>
+                
+                <div class="weather-desc">
+                    <p id="weatherDescription">Cerah</p>
+                    <p class="temp-range"> Maks: <span id="tempMax">30°C</span> / Min: <span id="tempMin">25°C</span>
+                    </p>
+                    <p id="feelsLike">Terasa seperti <span id="feelsLikeTemp">30°C</span></p>
+                </div>
+            </div>
+            
+            <div class="hourly-forecast">
+                <h3>Prakiraan Per Jam</h3>
+                <div class="hourly-container" id="hourlyContainer">
+                    </div>
+            </div>
+
+            <div class="daily-forecast">
+                <h3>Prakiraan 5 Hari</h3>
+                <div class="daily-container" id="dailyContainer">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Inka Larasati.</p>
+    </footer>
+
+    <div id="detailModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modalDay">Detail Hari</h3>
+            <p id="modalCity"></p>
+            <div class="modal-details-grid">
+                <div class="detail-item-modal">
+                    <i class="fas fa-temperature-three-quarters"></i>
+                    <div><span class="label">Suhu Min/Maks</span> <span class="value" id="modalTemp"></span></div>
+                </div>
+                <div class="detail-item-modal">
+                    <i class="fas fa-tint"></i>
+                    <div><span class="label">Kelembaban Rata-Rata</span> <span class="value" id="modalHumidity"></span></div>
+                </div>
+                <div class="detail-item-modal">
+                    <i class="fas fa-wind"></i>
+                    <div><span class="label">Kecepatan Angin</span> <span class="value" id="modalWind"></span></div>
+                </div>
+                <div class="detail-item-modal">
+                    <i class="fas fa-cloud"></i>
+                    <div><span class="label">Peluang Hujan</span> <span class="value" id="modalPop"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
