@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h2>🌤 Weather Dashboard</h2>
+    <div class="search-container">
+      <input type="text" id="city" placeholder="Enter city name..." autocomplete="off" />
+      <div id="suggestions"></div>
+    </div>
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <button id="search-btn">Search</button>
+      <button id="fav-btn">⭐ Add to Favorites</button>
+    </div>
+    <div class="toggles">
+      <label>
+        <input type="checkbox" id="unit-toggle" />
+        °C / °F
+      </label>
+      <label>
+        <input type="checkbox" id="theme-toggle" />
+        Dark / Light
+      </label>
+    </div>
+    <div id="loading" class="hidden">Loading weather data...</div>
+    <div id="error" class="hidden"></div>
+    <div id="current-weather" class="hidden">
+      <img id="weather-icon" alt="Weather Icon" />
+      <div id="temp-div"></div>
+      <div id="weather-info"></div>
+      <div class="weather-details" id="weather-details"></div>
+    </div>
+    <div id="hourly-container" class="hidden">
+      <h3>Today (3-hourly)</h3>
+      <div id="hourly-forecast"></div>
+    </div>
+    <div id="daily-container" class="hidden">
+      <h3>5-Day Forecast</h3>
+      <div id="daily-forecast"></div>
+    </div>
+    <h3>Favorites</h3>
+    <ul id="favorites"></ul>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
