@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header role="banner">
+            <div class="logo">
+                <span>⛅</span>
+                <span>Weather Dashboard</span>
+            </div>
+            <div class="search-container" role="search">
+                <label for="citySearch" class="sr-only">Search for a city</label>
+                <input 
+                    type="text" 
+                    id="citySearch" 
+                    class="search-box" 
+                    placeholder="Search city..."
+                    aria-label="City search"
+                    aria-autocomplete="list"
+                    aria-controls="searchSuggestions"
+                >
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    🔍
+                </button>
+                <div id="searchSuggestions" class="search-suggestions" role="listbox"></div>
+            </div>
+            <div class="controls">
+                <button class="btn" id="unitToggle" aria-label="Toggle temperature unit">°C / °F</button>
+                <button class="btn" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="btn btn-primary" id="locationBtn" aria-label="Use my location">📍 My Location</button>
+                <button class="btn" id="addFavorite" aria-label="Add to favorites">⭐ Add Favorite</button>
+            </div>
+        </header>
+        <div id="errorMessage" class="error-message" role="alert" aria-live="assertive"></div>
+        <div class="loading" id="loading" aria-live="polite" aria-busy="true">
+            <div class="spinner"></div>
+            <span class="sr-only">Loading weather data...</span>
+        </div>
+        <main id="weatherContent">
+            <section class="current-weather" aria-label="Current weather">
+                <div class="weather-main">
+                    <div class="weather-icon-large" id="mainIcon" aria-hidden="true">⛅</div>
+                    <div class="weather-info">
+                        <div class="location" id="location">
+                            <span>📍</span>
+                            <span>Getting your location...</span>
+                        </div>
+                        <h2 id="condition">Loading...</h2>
+                        <div class="temperature" id="temperature">--°</div>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Feels Like</div>
+                        <div class="detail-value" id="feelsLike">--°</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Humidity</div>
+                        <div class="detail-value" id="humidity">--%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Wind Speed</div>
+                        <div class="detail-value" id="windSpeed">-- km/h</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Pressure</div>
+                        <div class="detail-value" id="pressure">-- hPa</div>
+                    </div>
+                </div>
+            </section>
+            <section class="forecast-section" aria-label="5-day forecast">
+                <h3 class="section-title">5-Day Forecast</h3>
+                <div class="forecast-container" id="forecastContainer"></div>
+            </section>
+            <section class="favorites-section" aria-label="Favorite locations">
+                <h3 class="section-title">Favorite Locations</h3>
+                <div class="favorites-container" id="favoritesContainer"></div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
