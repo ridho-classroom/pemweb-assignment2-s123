@@ -1,0 +1,402 @@
+:root {
+    --light-bg: #f4f7f9;
+    --light-card-bg: #ffffff;
+    --light-text: #2c3e50;
+    --light-secondary-text: #7f8c8d;
+    --dark-bg: #1e272e;
+    --dark-card-bg: #2f3640;
+    --dark-text: #ecf0f1;
+    --dark-secondary-text: #bdc3c7;
+    --accent-color: #3498db;
+    --error-color: #e74c3c;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+}
+
+/* Light Theme */
+.light-theme {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+.light-theme .card, .light-theme .modal-content, .light-theme .search-box input, .light-theme .autocomplete-dropdown {
+    background-color: var(--light-card-bg);
+    box-shadow: var(--shadow-light);
+}
+
+/* Dark Theme */
+.dark-theme {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+.dark-theme .card, .dark-theme .modal-content, .dark-theme .search-box input, .dark-theme .autocomplete-dropdown {
+    background-color: var(--dark-card-bg);
+    box-shadow: var(--shadow-dark);
+}
+.dark-theme .search-box input {
+    color: var(--dark-text);
+}
+
+/* Header & Controls */
+header {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.logo {
+    font-size: 1.8em;
+}
+.controls .control-btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 8px 12px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.controls .control-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Main Layout */
+main {
+    padding: 20px 5%;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 300px; /* Layout dasar: Dashboard dan Sidebar Pencarian */
+}
+
+/* Search Section (Sidebar) */
+.search-section {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.search-box {
+    position: relative;
+    display: flex;
+    box-shadow: var(--shadow-light);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.search-box input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: none;
+    font-size: 1em;
+    outline: none;
+}
+.search-box button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.search-box button:hover {
+    background-color: #2980b9;
+}
+.autocomplete-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0 0 8px 8px;
+    border-top: 1px solid var(--light-bg);
+    box-shadow: var(--shadow-light);
+}
+.autocomplete-dropdown div {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #ecf0f1;
+}
+.dark-theme .autocomplete-dropdown div {
+    border-bottom: 1px solid var(--dark-bg);
+}
+.autocomplete-dropdown div:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.history-favorites h4 {
+    margin-bottom: 10px;
+    color: var(--accent-color);
+}
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.tag-list button {
+    padding: 5px 10px;
+    border: 1px solid var(--accent-color);
+    background: none;
+    color: var(--accent-color);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.tag-list button:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Dashboard Section */
+.weather-dashboard {
+    grid-column: 1 / 2;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 2fr 1fr; /* Cuaca saat ini (2/3) dan Detail (1/3) */
+}
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+/* Hero Card (Current Weather) */
+.hero-card {
+    grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.hero-location {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+}
+.hero-main-info {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+.hero-temp {
+    font-size: 5em;
+    font-weight: 300;
+    margin-right: 20px;
+}
+.hero-weather-icon {
+    font-size: 4em;
+    color: var(--accent-color);
+}
+.hero-conditions {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+.hero-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--light-secondary-text);
+}
+.hero-details div {
+    font-size: 0.9em;
+}
+.hero-details strong {
+    font-size: 1.2em;
+    display: block;
+}
+.hero-details i {
+    margin-right: 5px;
+    color: var(--accent-color);
+}
+
+/* Additional Data */
+.detail-grid {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+}
+.detail-grid h2 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+.detail-item {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: rgba(52, 152, 219, 0.05); /* Latar belakang item detail */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.dark-theme .detail-item {
+     background-color: rgba(52, 152, 219, 0.15);
+}
+.detail-item i {
+    font-size: 1.5em;
+    color: var(--accent-color);
+}
+.detail-item p {
+    margin: 0;
+}
+
+/* Forecast 5 Days */
+.forecast-section {
+    grid-column: 1 / 3;
+}
+.forecast-section h2 {
+    margin-bottom: 15px;
+    color: var(--light-text);
+}
+.dark-theme .forecast-section h2 {
+    color: var(--dark-text);
+}
+.forecast-grid {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+.forecast-card {
+    flex: 0 0 180px; /* Lebar tetap untuk kartu prakiraan */
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.forecast-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+.forecast-card h4 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+.forecast-card i {
+    font-size: 2.5em;
+    margin: 10px 0;
+}
+.forecast-temp-range {
+    font-weight: bold;
+}
+
+/* Status dan Error */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    z-index: 1000;
+}
+.error-banner {
+    grid-column: 1 / 3;
+    background-color: var(--error-color);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.hidden {
+    display: none !important;
+}
+
+/* Modal Styling */
+.modal {
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+}
+.dark-theme .modal-content {
+    background-color: var(--dark-card-bg);
+}
+.close-btn {
+    color: var(--light-secondary-text);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close-btn:hover, .close-btn:focus {
+    color: var(--accent-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+#modal-body {
+    padding-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+#modal-body .hourly-item {
+    flex: 0 0 100px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    main {
+        grid-template-columns: 1fr; /* Kolom tunggal pada perangkat kecil */
+    }
+    .search-section {
+        grid-column: 1 / 2;
+    }
+    .weather-dashboard {
+        grid-column: 1 / 2;
+        grid-template-columns: 1fr; /* Cuaca saat ini dan detail bertumpuk */
+    }
+    .hero-card, .detail-grid, .forecast-section {
+        grid-column: 1 / 2;
+    }
+    .hero-main-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .hero-temp {
+        font-size: 4em;
+    }
+}
