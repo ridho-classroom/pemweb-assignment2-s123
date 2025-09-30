@@ -1,0 +1,195 @@
+/*
+  Weather Dashboard Styles
+  - Mobile-first responsive design
+  - Dark/Light theme support
+  - Accessibility and high contrast
+*/
+:root {
+  --primary-bg: #f4f6fa;
+  --primary-text: #222;
+  --accent: #0077ff;
+  --card-bg: #fff;
+  --border-radius: 12px;
+  --transition: 0.2s;
+}
+[data-theme="dark"] {
+  --primary-bg: #181c25;
+  --primary-text: #f4f6fa;
+  --card-bg: #232a36;
+  --accent: #4db8ff;
+}
+html {
+  font-size: 16px;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(to top, #b3d8f8 0%, #eaf6ff 100%);
+  color: var(--primary-text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Clouds illustration for background */
+.clouds-bg {
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .clouds-bg {
+    top: 0; bottom: 0;
+  }
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--card-bg);
+  border-bottom: 1px solid #e0e0e0;
+}
+.toggles button {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-text);
+  transition: color var(--transition);
+}
+main {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+#search-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#search-input {
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+#suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  position: absolute;
+  z-index: 10;
+}
+#suggestions li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+#suggestions li:hover, #suggestions li:focus {
+  background: var(--accent);
+  color: #fff;
+}
+#weather-section {
+  margin-top: 2rem;
+}
+#current-weather {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#forecast {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+.forecast-item {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  min-width: 100px;
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.forecast-item:hover, .forecast-item:focus {
+  background: var(--accent);
+  color: #fff;
+}
+#favorites-section, #history-section {
+  margin-top: 2rem;
+}
+#favorites-list, #history-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+#favorites-list li, #history-list li {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  transition: background var(--transition);
+}
+#favorites-list li:hover, #history-list li:hover {
+  background: var(--accent);
+  color: #fff;
+}
+#loading, #error {
+  margin: 1rem 0;
+  text-align: center;
+  font-weight: bold;
+}
+#loading {
+  color: var(--accent);
+}
+#loading.hidden, #error.hidden, #suggestions.hidden {
+  display: none;
+}
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-top: 1px solid #e0e0e0;
+  margin-top: 2rem;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 0.5rem;
+  }
+  #forecast {
+    gap: 0.25rem;
+  }
+}
+/* Accessibility: focus ring */
+:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+/* High contrast mode */
+@media (forced-colors: active) {
+  body, header, main, footer, .forecast-item, #current-weather {
+    forced-color-adjust: none;
+    background: Window !important;
+    color: WindowText !important;
+    border-color: GrayText !important;
+  }
+}
