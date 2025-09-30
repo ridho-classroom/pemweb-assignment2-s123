@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <h1 class="logo">🌤 Weather Dashboard</h1>
+
+    <div class="search-bar">
+      <input 
+        type="text" 
+        id="cityInput" 
+        placeholder="Search city..." 
+        aria-label="Search city" 
+        autocomplete="off"
+      />
+      <button id="searchBtn" title="Search">🔍</button>
+      <!-- 🔽 Suggestions muncul di sini -->
+      <ul id="suggestions" class="suggestions"></ul>
+    </div>
+
+    <div class="controls">
+      <button id="themeToggle" title="Toggle Dark/Light">🌙</button>
+      <button id="unitToggle" title="Toggle Unit">°C / °F</button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN DASHBOARD ================= -->
+  <main class="dashboard">
+    <!-- ===== CURRENT WEATHER ===== -->
+    <section class="current-weather">
+      <h2 id="cityName">--</h2>
+      <p id="country">--</p>
+      <p id="dateTime">--</p>
+
+      <div class="temp-container">
+        <img id="weatherIcon" src="" alt="Weather Icon" />
+        <h1 id="temperature">--°C</h1>
+      </div>
+
+      <p id="condition">--</p>
+      <p>Feels like: <span id="feelsLike">--°C</span></p>
+      <p>Humidity: <span id="humidity">--%</span></p>
+      <p>Wind: <span id="wind">-- km/h</span></p>
+
+      <button id="saveFavorite" class="favorite-btn">⭐ Save</button>
+    </section>
+
+    <!-- ===== FORECAST ===== -->
+    <section class="forecast">
+      <h2>5-Day Forecast</h2>
+      <div id="forecastContainer" class="forecast-grid"></div>
+
+      <div class="hourly">
+        <h3>Hourly Forecast</h3>
+        <div id="hourlyContainer" class="hourly-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <div class="history">
+        <h3>Recent Searches</h3>
+        <ul id="recentSearches"></ul>
+      </div>
+
+      <div class="favorites">
+        <h3>Favorites</h3>
+        <ul id="favoritesList"></ul>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ================= STATUS & ERRORS ================= -->
+  <div id="loading" class="loading">Loading...</div>
+  <div id="error" class="error"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
