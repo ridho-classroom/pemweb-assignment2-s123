@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Chart Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .chart-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .temp-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff6b6b;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+            transition: transform 0.2s ease;
+        }
+        
+        .temp-point:hover {
+            transform: translate(-50%, -50%) scale(1.3);
+        }
+        
+        .rain-bar {
+            position: absolute;
+            background: linear-gradient(to top, #4dabf7, #74c0fc);
+            border-radius: 2px 2px 0 0;
+            bottom: 40px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .rain-bar:hover {
+            opacity: 1;
+        }
+        
+        .chart-time-label {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 500;
+            transform: translateX(-50%);
+        }
+        
+        .chart-temp-label {
+            position: absolute;
+            font-size: 0.75rem;
+            color: #1e293b;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2px 6px;
+            border-radius: 4px;
+            transform: translate(-50%, -120%);
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s ease;
+        }
+        
+        .chart-temp-label:hover {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: #ff6b6b;
+        }
+        
+        .chart-rain-label {
+            position: absolute;
+            font-size: 0.7rem;
+            color: #2563eb;
+            font-weight: 500;
+            transform: translate(-50%, -10px);
+        }
+        
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .temp-color {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+        }
+        
+        .rain-color {
+            background: linear-gradient(45deg, #4dabf7, #74c0fc);
+        }
+        
+        .legend-label {
+            font-size: 0.875rem;
+            color: #475569;
+            font-weight: 500;
+        }
+        
+        .demo-info {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <h1 class="chart-title">24-Hour Weather Chart</h1>
+        <div class="demo-info">Demo grafik cuaca dengan temperature curve dan rain probability</div>
+        
+        <div class="chart-wrapper">
+            <canvas id="weather-chart" width="800" height="300"></canvas>
+            <div class="chart-overlay" id="chart-overlay"></div>
+        </div>
+        
+        <div class="chart-legend">
+            <div class="legend-item">
+                <span class="legend-color temp-color"></span>
+                <span class="legend-label">Temperature (°C)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color rain-color"></span>
+                <span class="legend-label">Rain Probability (%)</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo data untuk testing
+        const demoData = [
+            { temp: 26, rain: 3, time: '11 PM' },
+            { temp: 26, rain: 12, time: '2 AM' },
+            { temp: 25, rain: 9, time: '5 AM' },
+            { temp: 27, rain: 9, time: '8 AM' },
+            { temp: 31, rain: 13, time: '11 AM' },
+            { temp: 33, rain: 50, time: '2 PM' },
+            { temp: 28, rain: 47, time: '5 PM' },
+            { temp: 27, rain: 23, time: '8 PM' }
+        ];
+        
+        function drawWeatherChart() {
+            const canvas = document.getElementById('weather-chart');
+            const ctx = canvas.getContext('2d');
+            const overlay = document.getElementById('chart-overlay');
+            
+            // Clear canvas and overlay
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            overlay.innerHTML = '';
+            
+            // Chart dimensions
+            const chartWidth = canvas.width;
+            const chartHeight = canvas.height;
+            const padding = 60;
+            const plotWidth = chartWidth - (padding * 2);
+            const plotHeight = chartHeight - (padding * 2);
+            
+            // Get data
+            const temps = demoData.map(item => item.temp);
+            const minTemp = Math.min(...temps) - 2;
+            const maxTemp = Math.max(...temps) + 2;
+            const tempRange = maxTemp - minTemp;
+            
+            // Draw temperature curve
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, padding, 0, chartHeight - padding);
+            gradient.addColorStop(0, 'rgba(255, 107, 107, 0.8)');
+            gradient.addColorStop(1, 'rgba(255, 142, 142, 0.2)');
+            
+            // Draw curve
+            ctx.beginPath();
+            demoData.forEach((item, index) => {
+                const x = padding + (index * (plotWidth / (demoData.length - 1)));
+                const y = padding + ((maxTemp - item.temp) / tempRange) * plotHeight;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+            
+            // Fill area under curve
+            ctx.fillStyle = gradient;
+            ctx.lineTo(padding + plotWidth, chartHeight - padding);
+            ctx.lineTo(padding, chartHeight - padding);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Add points and labels
+            demoData.forEach((item, index) => {
+                const x = padding + (index * (plotWidth / (demoData.length - 1))); 
+                const y = padding + ((maxTemp - item.temp) / tempRange) * plotHeight;
+                
+                // Temperature point
+                const tempPoint = document.createElement('div');
+                tempPoint.className = 'temp-point';
+                tempPoint.style.left = `${(x / chartWidth) * 100}%`;
+                tempPoint.style.top = `${(y / chartHeight) * 100}%`;
+                overlay.appendChild(tempPoint);
+                
+                // Temperature label
+                const tempLabel = document.createElement('div');
+                tempLabel.className = 'chart-temp-label';
+                tempLabel.textContent = `${item.temp}°`;
+                tempLabel.style.left = `${(x / chartWidth) * 100}%`;
+                tempLabel.style.top = `${(y / chartHeight) * 100}%`;
+                overlay.appendChild(tempLabel);
+                
+                // Rain bar
+                if (item.rain > 0) {
+                    const rainBar = document.createElement('div');
+                    rainBar.className = 'rain-bar';
+                    const barHeight = (item.rain / 100) * (plotHeight * 0.3);
+                    rainBar.style.left = `${(x / chartWidth) * 100}%`;
+                    rainBar.style.width = '16px';
+                    rainBar.style.height = `${barHeight}px`;
+                    rainBar.style.transform = 'translateX(-50%)';
+                    overlay.appendChild(rainBar);
+                    
+                    // Rain label
+                    const rainLabel = document.createElement('div');
+                    rainLabel.className = 'chart-rain-label';
+                    rainLabel.textContent = `${item.rain}%`;
+                    rainLabel.style.left = `${(x / chartWidth) * 100}%`;
+                    rainLabel.style.bottom = `${40 + barHeight}px`;
+                    overlay.appendChild(rainLabel);
+                }
+                
+                // Time label
+                const timeLabel = document.createElement('div');
+                timeLabel.className = 'chart-time-label';
+                timeLabel.textContent = item.time;
+                timeLabel.style.left = `${(x / chartWidth) * 100}%`;
+                overlay.appendChild(timeLabel);
+            });
+            
+            // Draw grid lines
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.lineWidth = 1;
+            
+            // Horizontal grid
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (i * (plotHeight / 4));
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(chartWidth - padding, y);
+                ctx.stroke();
+            }
+            
+            // Vertical grid
+            demoData.forEach((item, index) => {
+                const x = padding + (index * (plotWidth / (demoData.length - 1)));
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, chartHeight - padding);
+                ctx.stroke();
+            });
+        }
+        
+        // Draw chart when page loads
+        window.addEventListener('load', drawWeatherChart);
+        window.addEventListener('resize', drawWeatherChart);
+    </script>
+</body>
+</html>
