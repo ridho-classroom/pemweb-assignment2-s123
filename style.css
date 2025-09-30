@@ -1,0 +1,678 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #e0e0e0;
+    color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.weather-dashboard {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    padding: 40px 50px;
+    border-radius: 25px;
+    box-shadow: var(--shadow);
+    max-width: 1200px;
+    margin: auto;
+    height: auto;
+}
+
+/* HEADER */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-weight: bold;
+}
+
+.logo i {
+    font-size: 2.5rem;
+}
+
+.logo h2 {
+    font-size: 1.6rem;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar input {
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    outline: none;
+    height: 2.5rem;
+    width: 15rem;
+}
+
+.search-bar button {
+    background: #333;
+    color: #fff;
+    border-radius: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    height: 2.5rem;
+    width: 3rem;
+}
+
+.search-bar button:hover {
+    background: #eee;
+    color: #333;
+}
+
+/* HEADER END */
+
+/* LOADING & ERROR STATES */
+.loading-state,
+.error-state {
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.loading-state {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.loading-state i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error-state {
+    background: #ffeaea;
+    border: 1px solid #ff5c5c;
+    color: #b00020;
+}
+/* LOADING & ERROR STATES END */
+
+/* FORECAST SECTION */
+.today-forecast h2,
+.five-days-forecast h2 {
+    margin: 25px 0;
+}
+
+.forecast-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.left-card,
+.middle-card,
+.right-card {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+/* LEFT CARD */
+.left-card {
+    width: 300PX;
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #fafafa;
+    border-radius: 25px;
+    box-shadow: var(--shadow, 0 2px 6px rgba(0, 0, 0, 0.1));
+}
+
+.left-card>i {
+    font-size: 8rem;
+    color: #333;
+    align-self: center;
+}
+
+.weather-icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.weather-icon img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    display: block;
+}
+
+#weather-icon-fallback {
+    font-size: 6rem;
+    color: #333;
+    display: block;
+}
+
+#temperature {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+#condition {
+    margin-top: 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #333;
+    text-align: left;
+}
+
+.left-card hr {
+    border: none;
+    height: 2px;
+    background: #333;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.left-card .location {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.left-card .location p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.left-card .location i {
+    font-size: 1.3rem;
+    align-items: center;
+    color: #333;
+    margin: 0;
+}
+/* LEFT CARD END */
+
+/* MIDDLE CARD */
+.middle-card {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    background: none;
+    padding: 0;
+}
+
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background: #fafafa;
+    padding: 15px 30px;
+    border-radius: 25px;
+    height: 9rem;
+    box-shadow: var(--shadow, 0 2px 6px rgba(0, 0, 0, 0.1));
+}
+
+.info-box i {
+    font-size: 4rem;
+    color: #333;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-text .label {
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0;
+    color: #333;
+}
+
+.info-text .value {
+    font-size: 1.1rem;
+    margin: 2px 0 0 0;
+    color: #333;
+}
+/* MIDDLE CARD END */
+
+/* RIGHT CARD */
+.right-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    align-self: stretch;
+}
+
+.right-card .subcard {
+    background: #fafafa;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow, 0 2px 6px rgba(0, 0, 0, 0.1));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.right-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.right-card .saved-location-box {
+    flex: 1 1 auto;
+    max-height: 362px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.right-card .current-location {
+    flex: 0 0 auto;
+}
+
+#save-location-btn {
+    align-self: flex-start;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #333;
+}
+
+#save-location-btn i {
+    font-size: 1rem;
+}
+
+#save-location-btn:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+#saved-location-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#saved-location-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #333;
+    font-size: 0.95rem;
+}
+
+#saved-location-list li .delete-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #b00020;
+}
+
+#saved-location-list li .delete-btn:hover {
+    color: red;
+}
+
+#saved-location-list li:last-child {
+    border-bottom: none;
+}
+
+#saved-location-list li i {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+#saved-location-list .placeholder {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    padding: 12px 0;
+    border-bottom: none;
+}
+/* RIGHT CARD END */
+
+/* BOTTOM CARD */
+.bottom-card {
+    grid-column: 1 / -1;
+    background: #fafafa;
+    border-radius: 20px;
+    padding: 15px 30px;
+    box-shadow: var(--shadow, 0 2px 6px rgba(0, 0, 0, 0.1));
+}
+
+.bottom-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.hourly-forecast {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 10px;
+}
+
+.hourly-forecast::-webkit-scrollbar {
+    height: 6px;
+}
+
+.hourly-forecast::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.hourly-item {
+    flex: 0 0 auto;
+    min-width: 70px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 12px 8px;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.hourly-item i {
+    font-size: 1.5rem;
+}
+
+.hourly-item .time {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.hourly-item .temp {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+/* BOTTOM CARD END */
+
+/* 5-DAYS FORECAST */
+.five-days-forecast {
+    margin-top: 30px;
+}
+
+.five-days-card {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.five-days-forecast .day-card {
+    display: inline-block;
+    width: ;
+    background: #fafafa;
+    border-radius: 25px;
+    text-align: center;
+    align-items: center;
+    padding: 50px 25px;
+    box-shadow: var(--shadow, 0 2px 6px rgba(0, 0, 0, 0.1));
+}
+
+.five-days-forecast .day-card i {
+    font-size: 5rem;
+    margin: 10px 0;
+}
+
+.five-days-forecast .day-card p {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.five-days-forecast span {
+    font-size: 1rem;
+}
+/* 5-DAYS FORECAST END */
+
+/* RECENT SEARCH */
+#recent-searches {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    margin-top: 4px;
+    z-index: 10;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#recent-searches button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: #333;
+}
+
+#recent-searches button:hover {
+    background: #f5f5f5;
+}
+
+.search-bar {
+    position: relative;
+}
+/* RECENT SEARCH END */
+
+
+/* DARK MODE */
+body.dark-mode {
+    background: #121212;
+    color: #eee;
+}
+
+/* Dashboard */
+body.dark-mode .weather-dashboard {
+    background: #1e1e1e;
+    color: #eee;
+    box-shadow: none;
+}
+
+/* Header */
+body.dark-mode .logo i,
+body.dark-mode .logo h2 {
+    color: #eee;
+}
+
+body.dark-mode .search-bar input {
+    background: #2c2c2c;
+    border: 1px solid #555;
+    color: #eee;
+}
+
+body.dark-mode .search-bar button {
+    background: #555;
+    color: #eee;
+}
+
+body.dark-mode .search-bar button:hover {
+    background: #777;
+    color: #fff;
+}
+
+/* Loading & Error states */
+body.dark-mode .loading-state {
+    background: #2c2c2c;
+    border: 1px solid #555;
+    color: #eee;
+}
+
+body.dark-mode .error-state {
+    background: #3a1e1e;
+    border: 1px solid #a33;
+    color: #f88;
+}
+
+/* Forecast Cards */
+body.dark-mode .left-card,
+body.dark-mode .middle-card .info-box,
+body.dark-mode .right-card .subcard,
+body.dark-mode .bottom-card,
+body.dark-mode .five-days-forecast .day-card {
+    background: #2c2c2c;
+    color: #eee;
+    box-shadow: none;
+}
+
+/* Divider line */
+body.dark-mode .left-card hr {
+    background: #555;
+}
+
+/* Icons */
+body.dark-mode i {
+    color: #eee !important;
+}
+
+/* Location text */
+body.dark-mode .location p,
+body.dark-mode .info-text .label,
+body.dark-mode .info-text .value,
+body.dark-mode #temperature,
+body.dark-mode #condition {
+    color: #eee;
+}
+
+/* Saved location list */
+body.dark-mode #saved-location-list li {
+    border-bottom: 1px solid #555;
+    color: #eee;
+}
+
+body.dark-mode #saved-location-list li i {
+    color: #eee;
+}
+
+body.dark-mode #saved-location-list li .delete-btn {
+    color: #f88;
+}
+
+body.dark-mode #saved-location-list li .delete-btn:hover {
+    color: #ff5c5c;
+}
+
+/* Recent searches dropdown */
+body.dark-mode #recent-searches {
+    background: #2c2c2c;
+    border: 1px solid #555;
+}
+
+body.dark-mode #recent-searches button {
+    color: #eee;
+}
+
+body.dark-mode #recent-searches button:hover {
+    background: #444;
+}
+
+/* Hourly forecast */
+body.dark-mode .hourly-item {
+    color: #eee;
+}
+
+body.dark-mode .hourly-item .time {
+    color: #bbb;
+}
+
+/* Scrollbar */
+body.dark-mode .hourly-forecast::-webkit-scrollbar-thumb,
+body.dark-mode .saved-location-box::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+/* Save Location Button */
+body.dark-mode #save-location-btn {
+    color: #eee;
+}
+
+body.dark-mode #save-location-btn:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+/* DARK MODE END */
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .forecast-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .five-days-forecast .day-card {
+        width: 45%;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .search-bar {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .five-days-forecast .day-card {
+        width: 100%;
+    }
+}
+
+/* RESPONSIVE END */
