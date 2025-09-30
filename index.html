@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard cuaca Indonesia dengan prakiraan 5 hari">
+    <meta name="keywords" content="cuaca, weather, prakiraan, Indonesia">
+    <title>Dashboard Cuaca - Indonesia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>
+                <span>☀️</span>
+                <span>Dashboard Cuaca</span>
+            </h1>
+            <nav class="controls" role="navigation" aria-label="Kontrol utama">
+                <button class="btn toggle-btn" id="themeToggle" aria-label="Toggle tema">
+                    🌙 Mode Gelap
+                </button>
+                <button class="btn toggle-btn" id="unitToggle" aria-label="Toggle satuan suhu">
+                    °C / °F
+                </button>
+                <button class="btn" id="locationBtn" aria-label="Gunakan lokasi saya">
+                    📍 Lokasi Saya
+                </button>
+            </nav>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-container" role="search">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Cari kota (contoh: Jakarta, Surabaya...)"
+                    aria-label="Cari kota"
+                    autocomplete="off"
+                >
+                <button class="btn" id="searchBtn" aria-label="Cari cuaca">
+                    🔍 Cari
+                </button>
+            </div>
+            <div id="recentSearches" class="recent-searches" role="list" aria-label="Pencarian terakhir"></div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading hidden" role="status" aria-live="polite">
+            <div class="spinner"></div>
+            <p>Memuat data cuaca...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error hidden" role="alert" aria-live="assertive"></div>
+
+        <!-- Main Weather Display -->
+        <main id="mainWeather" class="main-weather hidden">
+            <div class="location" id="location">
+                <span id="cityName"></span>
+            </div>
+            <div class="weather-icon-main" id="weatherIcon" aria-hidden="true"></div>
+            <div class="temperature" id="temperature"></div>
+            <div class="weather-description" id="weatherDescription"></div>
+            <button class="btn" id="addFavorite" aria-label="Tambah ke favorit">
+                ⭐ Tambah ke Favorit
+            </button>
+            
+            <!-- Weather Details Grid -->
+            <div class="weather-details">
+                <div class="detail-item">
+                    <div class="detail-label">Terasa Seperti</div>
+                    <div class="detail-value" id="feelsLike"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Kelembaban</div>
+                    <div class="detail-value" id="humidity"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Kecepatan Angin</div>
+                    <div class="detail-value" id="windSpeed"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Tekanan</div>
+                    <div class="detail-value" id="pressure"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Terbit Matahari</div>
+                    <div class="detail-value" id="sunrise"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Terbenam Matahari</div>
+                    <div class="detail-value" id="sunset"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Forecast Section -->
+        <section id="forecastSection" class="forecast-section hidden">
+            <h2 class="forecast-title">Prakiraan 5 Hari</h2>
+            <div class="forecast-grid" id="forecastGrid"></div>
+        </section>
+
+        <!-- Favorites Section -->
+        <section class="favorites-section">
+            <h2 class="forecast-title">Lokasi Favorit</h2>
+            <div class="favorites-grid" id="favoritesGrid">
+                <p style="color: var(--text-secondary);">Belum ada lokasi favorit. Tambahkan lokasi favorit Anda!</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 20px; color: var(--text-secondary); margin-top: 40px;">
+        <p>© 2025 Dashboard Cuaca Indonesia | Data dari OpenWeatherMap</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
