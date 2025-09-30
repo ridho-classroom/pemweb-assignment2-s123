@@ -41,9 +41,11 @@
             <div class="spinner"></div>
             <span class="sr-only">Loading weather data...</span>
         </div>
+
+        <div id="weatherAlerts" class="weather-alerts" role="alert" aria-live="assertive" style="display:none;"></div>
         <main id="weatherContent">
-            <section class="current-weather" aria-label="Current weather">
-                <div class="weather-main">
+            <section class="current-weather" id="currentWeatherSection" aria-label="Current weather">
+                <div class="weather-main" id="weatherMain">
                     <div class="weather-icon-large" id="mainIcon" aria-hidden="true">⛅</div>
                     <div class="weather-info">
                         <div class="location" id="location">
@@ -81,8 +83,19 @@
                 <h3 class="section-title">Favorite Locations</h3>
                 <div class="favorites-container" id="favoritesContainer"></div>
             </section>
+
+            <section class="compare-section" aria-label="Compare cities">
+                <h3 class="section-title">Bandingkan Cuaca Kota</h3>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+                    <input type="text" id="compareInput" class="search-box" placeholder="Tambah kota..." style="max-width:200px;">
+                    <button class="btn btn-primary" id="addCompareBtn">+ Tambah Kota</button>
+                </div>
+                <div class="compare-container" id="compareContainer"></div>
+            </section>
         </main>
     </div>
     <script src="app.js"></script>
 </body>
 </html>
+
+
