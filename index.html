@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveWeatherDashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="style.css">
+    <meta name="color-scheme" content="light dark">
+</head>
+<body>
+    <header class="app-header">
+        <h1><span class="material-symbols-outlined">filter_drama</span>Weather Dashboard</h1> 
+        <div class="header-controls">
+            <button id="unit-toggle" aria-label="Toggle satuan suhu" class="control-button">°C / °F</button>
+            <button id="theme-toggle" aria-label="Toggle tema" class="control-button">🌙</button>
+        </div>
+    </header>
+
+    <main class="weather-dashboard">
+        <section class="search-section" aria-label="Cari cuaca berdasarkan kota">
+            <div class="search-container">
+                <input type="text" id="city-search" placeholder="Cari Kota..." aria-label="Input nama kota" autocomplete="off">
+                <button id="search-button" aria-label="Tombol cari"><span class="material-symbols-outlined">search</span></button>
+            </div>
+            <ul id="search-suggestions" class="suggestions-list"></ul>
+            <p id="search-error" class="error-message" role="alert"></p>
+        </section>
+
+        <div id="loading-indicator" class="loading-spinner" aria-live="assertive" aria-hidden="true"></div>
+        <p id="global-error" class="error-message global-error" role="alert"></p>
+
+        <article class="current-weather-card" aria-live="polite">
+            <h2 id="current-location">Lokasi Anda</h2>
+            <p id="last-updated" class="last-updated-text"></p>
+            
+            <div class="main-details">
+                <img id="current-icon" src="" alt="Kondisi cuaca" class="weather-icon">
+                <div class="temperature-display">
+                    <p id="current-temp" class="temperature-value">--</p>
+                    <p id="current-condition" class="condition-text">Memuat...</p>
+                </div>
+            </div>
+
+            <div class="additional-details-grid">
+                <p><span class="material-symbols-outlined">device_thermostat</span><span class="detail-label">Terasa Seperti:</span><span id="feels-like-temp" class="detail-value">--</span></p>
+                <p><span class="material-symbols-outlined">humidity_mid</span><span class="detail-label">Kelembaban:</span><span id="humidity-val" class="detail-value">--</span></p>
+                <p><span class="material-symbols-outlined">air</span><span class="detail-label">Kecepatan Angin:</span><span id="wind-speed-val" class="detail-value">--</span></p>
+                <p><span class="material-symbols-outlined">wb_sunny</span><span class="detail-label">Matahari Terbit:</span><span id="sunrise-time" class="detail-value">--</span></p>
+                <p><span class="material-symbols-outlined">nights_stay</span><span class="detail-label">Matahari Terbenam:</span><span id="sunset-time" class="detail-value">--</span></p>
+            </div>
+            
+            <button id="add-favorite-btn" class="favorite-button" aria-label="Tambahkan ke favorit">
+                <span class="material-symbols-outlined">grade</span> Tambahkan ke Favorit
+            </button>
+        </article>
+
+        <section class="history-section" aria-label="Riwayat pencarian">
+            <h2><span class="material-symbols-outlined">history</span> Riwayat Pencarian</h2>
+            <ul id="search-history-list" class="location-list"></ul>
+        </section>
+        
+        <section class="favorites-section" aria-label="Lokasi favorit">
+            <h2><span class="material-symbols-outlined">grade</span> Favorit</h2>
+            <ul id="favorite-locations" class="location-list"></ul>
+        </section>
+
+        <section class="forecast-section" aria-label="Prakiraan 5 hari">
+            <h2><span class="material-symbols-outlined">calendar_today</span> Prakiraan 5 Hari</h2>
+            <div id="forecast-container" class="forecast-grid"></div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2025 Dasbor Cuaca. Data dari <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeatherMap</a>.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
