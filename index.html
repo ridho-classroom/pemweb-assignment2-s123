@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Pixel Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <body>
+  <body>
+  <img src="bg.jpg" class="bg-image" alt="background">
+  
+  <div class="network-status online" id="networkStatus" data-status="Online"></div>
+
+  <button class="hamburger" id="hamburgerBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="hamburger-menu" id="hamburgerMenu">
+    <div class="menu-content">
+      <h3>Settings & Favorites</h3>
+      
+     
+      <div class="menu-item">
+        <label>Temperature Unit:</label>
+        <button class="unit-toggle" id="unitToggle">°C</button>
+      </div>
+      
+      <div class="menu-item">
+        <label>Favorite Cities:</label>
+        <div id="favoritesList" class="favorites-list">
+          <p class="no-favorites">No favorites yet</p>
+        </div>
+      </div>
+      
+      <!-- Clear Data Buttons -->
+      <div class="menu-item">
+        <button id="clearFavorites" class="danger-btn">Clear Favorites</button>
+        <button id="clearCache" class="danger-btn">Clear Cache</button>
+      </div>
+      
+      <button class="close-menu" id="closeMenu">Close Menu</button>
+    </div>
+  </div>
+
+  <div class="app">
+    
+    <button class="theme-toggle-main" id="themeToggleMain" title="Toggle Dark/Light Theme">
+      ☀️
+    </button>
+
+    <h1 class="title">Weather Mel</h1>
+    <p class="date" id="date"></p>
+    
+    <div class="weather-card">
+      <img id="icon" class="weather-icon" src="" alt="Weather Icon">
+      <h2 id="temperature">-- °C</h2>
+      <p id="description">-</p>
+      <h3 id="city">--</h3>   
+      <div id="details"></div> 
+      <button id="addFavorite">⭐ Tambah ke Favorit</button>
+    </div>
+    
+    <div class="search-box">
+      <input type="text" id="cityInput" placeholder="Ketik kota...">
+      <div id="suggestions"></div>
+      <button onclick="searchWeather()">Cari</button>
+    </div>
+    <div class="geo">
+      <label class="switch">
+        <input type="checkbox" id="geoToggle">
+        <span class="slider"></span>
+      </label>
+      <span class="geo-text">Lokasi</span>
+    </div>
+    <p class="footer">By: Lutfiya</p>
+  </div>
+  <div class="forecast-card">
+    <h2>5 Hari Kedepan</h2>
+    <table id="forecastTable">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Cuaca</th>
+          <th>Suhu</th>
+          <th>Kondisi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>--</td>
+          <td>--</td>
+          <td>-- °C</td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
