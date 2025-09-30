@@ -21,7 +21,12 @@ const addFavorite = document.getElementById('addFavorite');
 const loading = document.getElementById('loading');
 const errorMessage = document.getElementById('errorMessage');
 const weatherContent = document.getElementById('weatherContent');
+const compareInput = document.getElementById('compareInput');
+const addCompareBtn = document.getElementById('addCompareBtn');
+const compareContainer = document.getElementById('compareContainer');
 
+// Compare cities state
+let compareCities = JSON.parse(localStorage.getItem('compareCities')) || [];
 // Initialize
 window.addEventListener('DOMContentLoaded', () => {
     initializeTheme();
@@ -325,3 +330,4 @@ function loadFavorites() {
         });
     });
 }
+
