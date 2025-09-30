@@ -115,3 +115,5 @@ Create a responsive weather dashboard that demonstrates HTML5 semantics, CSS3 re
 - Create a fork of this repository in your own account and carry out the work in that fork.
 - Submit your work by opening a Pull Request to this base project.
 - Provide the assignment details, including the PR link and recording files, in the MS Teams assignment submission.
+
+Pengerjaan Tugas 2 oleh Dhani Rahmat Maulana
