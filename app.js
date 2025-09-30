@@ -27,12 +27,14 @@ const compareContainer = document.getElementById('compareContainer');
 
 // Compare cities state
 let compareCities = JSON.parse(localStorage.getItem('compareCities')) || [];
+
 // Initialize
 window.addEventListener('DOMContentLoaded', () => {
     initializeTheme();
     loadFavorites();
     getUserLocation();
     setupEventListeners();
+    renderCompareCities();
 });
 
 function setupEventListeners() {
@@ -51,6 +53,66 @@ function setupEventListeners() {
         }
     });
     citySearch.addEventListener('keydown', handleSuggestionNavigation);
+
+    // Compare cities events
+    if (addCompareBtn && compareInput) {
+        addCompareBtn.addEventListener('click', () => {
+            const city = compareInput.value.trim();
+            if (city && !compareCities.includes(city)) {
+                compareCities.push(city);
+                localStorage.setItem('compareCities', JSON.stringify(compareCities));
+                renderCompareCities();
+                compareInput.value = '';
+            }
+        });
+        compareInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addCompareBtn.click();
+            }
+        });
+    }
+}
+// Render compare cities cards
+function renderCompareCities() {
+    if (!compareContainer) return;
+    if (compareCities.length === 0) {
+        compareContainer.innerHTML = '<div style="color:var(--text-secondary);padding:10px;">Belum ada kota untuk dibandingkan.</div>';
+        return;
+    }
+    compareContainer.innerHTML = '';
+    compareCities.forEach((city, idx) => {
+        fetch(`${API_BASE}/weather?q=${city}&units=${currentUnit}&appid=${API_KEY}`)
+            .then(res => res.json())
+            .then(data => {
+                const unit = currentUnit === 'metric' ? '°C' : '°F';
+                const windUnit = currentUnit === 'metric' ? 'km/h' : 'mph';
+                const icon = getWeatherIcon(data.weather[0].icon);
+                const html = `
+                    <div class="compare-card">
+                        <button class="remove-compare" title="Hapus kota" data-idx="${idx}">×</button>
+                        <div style="font-size:1.2rem;font-weight:600;">${data.name}, ${data.sys.country}</div>
+                        <div style="font-size:2.2rem;">${icon} ${Math.round(data.main.temp)}${unit}</div>
+                        <div style="font-size:1rem;">${data.weather[0].description}</div>
+                        <div style="font-size:0.95rem;">Kelembapan: ${data.main.humidity}% | Angin: ${Math.round(data.wind.speed * 3.6)} ${windUnit}</div>
+                    </div>
+                `;
+                compareContainer.innerHTML += html;
+                // Add remove event
+                setTimeout(() => {
+                    compareContainer.querySelectorAll('.remove-compare').forEach(btn => {
+                        btn.onclick = function() {
+                            const i = parseInt(this.getAttribute('data-idx'));
+                            compareCities.splice(i, 1);
+                            localStorage.setItem('compareCities', JSON.stringify(compareCities));
+                            renderCompareCities();
+                        };
+                    });
+                }, 100);
+            })
+            .catch(() => {
+                compareContainer.innerHTML += `<div class="compare-card"><div style='color:var(--error);'>${city}: Data tidak ditemukan.</div></div>`;
+            });
+    });
 }
 
 function handleSuggestionNavigation(e) {
@@ -209,6 +271,47 @@ function updateUI(data) {
     document.getElementById('pressure').textContent = `${current.main.pressure} hPa`;
     document.getElementById('mainIcon').textContent = getWeatherIcon(current.weather[0].icon);
     displayForecast(forecast);
+
+    // Weather alerts (OpenWeatherMap One Call API required for full alerts)
+    const alertsDiv = document.getElementById('weatherAlerts');
+    if (current.alerts && current.alerts.length > 0) {
+        alertsDiv.innerHTML = current.alerts.map(alert => `
+            <span>⚠️ <strong>${alert.event}</strong>: ${alert.description}</span>
+        `).join('<br>');
+        alertsDiv.style.display = 'flex';
+    } else {
+        alertsDiv.style.display = 'none';
+    }
+
+    // Dynamic background for current weather section
+    const section = document.getElementById('currentWeatherSection');
+    if (section) {
+        const icon = current.weather[0].icon;
+        let bg = '';
+        if (icon.startsWith('01')) { // clear
+            bg = 'linear-gradient(135deg, #56ccf2 0%, #2f80ed 100%)';
+        } else if (icon.startsWith('02') || icon.startsWith('03') || icon.startsWith('04')) { // clouds
+            bg = 'linear-gradient(135deg, #b6c6e3 0%, #5a7ca7 100%)';
+        } else if (icon.startsWith('09') || icon.startsWith('10')) { // rain
+            bg = 'linear-gradient(135deg, #667db6 0%, #0082c8 100%)';
+        } else if (icon.startsWith('11')) { // thunder
+            bg = 'linear-gradient(135deg, #373b44 0%, #4286f4 100%)';
+        } else if (icon.startsWith('13')) { // snow
+            bg = 'linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)';
+        } else if (icon.startsWith('50')) { // mist
+            bg = 'linear-gradient(135deg, #cfd9df 0%, #e2ebf0 100%)';
+        } else {
+            bg = 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))';
+        }
+        section.style.background = bg;
+        section.style.transition = 'background 0.8s cubic-bezier(.4,2,.6,1)';
+    }
+    // Animate weather main
+    const weatherMain = document.getElementById('weatherMain');
+    if (weatherMain) {
+        weatherMain.style.animation = 'fadeInWeather 1s';
+        setTimeout(() => { weatherMain.style.animation = ''; }, 1000);
+    }
 }
 
 function displayForecast(forecast) {
@@ -330,4 +433,6 @@ function loadFavorites() {
         });
     });
 }
+
+
 
