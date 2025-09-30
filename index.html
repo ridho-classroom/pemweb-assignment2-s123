@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cuaca</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://openweathermap.org/img/wn/10d.png">
+</head>
+<body>
+    <header>
+        <h1>Dashboard Cuaca</h1>
+        <button id="theme-toggle" aria-label="Ganti Tema">🌙</button>
+    </header>
+    <main>
+        <section id="current-weather" aria-label="Cuaca Saat Ini">
+            <div class="location">
+                <span id="city">Memuat...</span>, <span id="country"></span>
+                <button id="geo-btn" aria-label="Gunakan Lokasi Saya">📍 Lokasi Saya</button>
+                <button id="fav-btn" aria-label="Tambah ke Favorit">⭐ Favorit</button>
+            </div>
+            <div class="weather-main">
+                <img id="weather-icon" src="" alt="Icon Cuaca">
+                <div>
+                    <span id="temperature"></span>
+                    <span id="unit-toggle" class="toggle">°C</span>
+                </div>
+                <span id="condition"></span>
+            </div>
+            <div class="details">
+                <span>Kelembapan: <span id="humidity"></span>%</span>
+                <span>Angin: <span id="wind"></span> km/jam</span>
+                <span>Terasa seperti: <span id="feels_like"></span>°</span>
+            </div>
+        </section>
+        <section id="search-section">
+            <input type="text" id="search-input" placeholder="Cari kota..." autocomplete="off">
+            <ul id="suggestions"></ul>
+            <div id="search-error"></div>
+        </section>
+        <section id="forecast" aria-label="Prakiraan 5 Hari">
+            <h2>Perkiraan 5 Hari</h2>
+            <div id="forecast-list">
+                <!-- Contoh struktur item forecast, akan diisi JS -->
+                <!--
+                <div class="forecast-item">
+                    <div class="forecast-date">Senin, 30 Sep</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="Cerah">
+                    <div class="forecast-temp">32° / 25°</div> <!-- High / Low -->
+                    <div class="forecast-condition">Cerah</div>
+                </div>
+                -->
+            </div>
+        </section>
+        <section id="favorites">
+            <h2>Favorit</h2>
+            <ul id="favorite-list"></ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Dashboard Cuaca. Data oleh <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
+    </footer>
+    <script src="scriptjava.js"></script>
+</body>
+</html>
