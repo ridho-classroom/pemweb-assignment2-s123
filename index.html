@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>WeatherNow — Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <!-- Logo -->
+      <div class="logo">☁️ <span class="brand">WeatherNow</span></div>
+
+      <!-- Search -->
+      <!-- Search -->
+      <div class="search-container">
+        <div class="search-input-wrap">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Cari Kota"
+            autocomplete="off"
+          />
+          <button id="search-btn" class="search-btn" title="Cari">
+            <!-- pakai ikon SVG -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Suggestions -->
+        <ul
+          id="suggestions"
+          class="suggestions"
+          role="listbox"
+          aria-label="Suggestions"
+        ></ul>
+
+        <!-- History -->
+        <div id="history" class="history"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="toggle-dark" title="Toggle dark mode">🌙</button>
+        <button id="toggle-unit" title="Toggle °C/°F">°C / °F</button>
+        <button id="share-btn" class="share-btn">Bagikan</button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+      <!-- Current Weather -->
+      <section class="current-wrap glass-card">
+        <div class="left">
+          <div id="current-location" class="location">Memuat lokasi...</div>
+          <div class="weather-main">
+            <img id="current-icon" class="weather-icon" src="" alt="icon" />
+            <div class="temps">
+              <div id="current-temp" class="temp">--°</div>
+              <div id="current-desc" class="desc">--</div>
+            </div>
+          </div>
+          <p id="current-message" class="message">—</p>
+
+          <!-- Hourly Forecast -->
+          <section class="hourly-wrap">
+            <h3>Prakiraan Per Jam</h3>
+            <div id="hourly-grid" class="hourly-grid"></div>
+          </section>
+        </div>
+
+        <aside class="right">
+          <div class="extra-info">
+            <div class="info-grid">
+              <div class="info-item">
+                💧<span>Kelembaban</span><strong id="info-humidity">--%</strong>
+              </div>
+              <div class="info-item">
+                🌬️<span>Angin</span><strong id="info-wind">--</strong>
+              </div>
+              <div class="info-item">
+                👁️<span>Visibilitas</span
+                ><strong id="info-visibility">--</strong>
+              </div>
+              <div class="info-item">
+                ⏱️<span>Terasa seperti</span><strong id="info-feels">--</strong>
+              </div>
+              <div class="info-item">
+                ⚖️<span>Tekanan</span><strong id="info-pressure">--</strong>
+              </div>
+              <div class="info-item aq-item">
+                🌫️<span>Kualitas Udara</span><strong id="info-aqi">--</strong>
+              </div>
+              <div class="info-item">
+                🌞<span>UV Indeks</span><strong id="info-uv">--</strong>
+              </div>
+              <div class="info-item">
+                🌅<span>Terbit</span
+                ><strong id="info-sunrise">--</strong>
+              </div>
+              <div class="info-item">
+                🌇<span>Terbenam</span
+                ><strong id="info-sunset">--</strong>
+              </div>
+            </div>
+          </div>
+          <div id="map" class="map-container"></div>
+        </aside>
+      </section>
+
+      <section id="alerts" class="alerts-section glass-card"></section>
+
+      <!-- Forecast and Favorites Row -->
+<div class="forecast-fav-row">
+  <!-- Forecast 5 hari -->
+  <section class="forecast-wrap glass-card">
+    <h3>Prakiraan 5 Hari</h3>
+    <div id="forecast-grid" class="forecast-grid"></div>
+  </section>
+
+  <!-- Favorites -->
+  <section class="favorites glass-card">
+    <div class="favorites-wrap">
+      <div id="favorites-section" class="favorites-section">
+        <h4>Lokasi Favorit</h4>
+        <div class="fav-list" id="fav-list"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+      <section id="comparison" class="comparison-section glass-card" style="display:none;">
+        <div class="compare-search-container">
+          <div class="search-input-wrap">
+            <input id="compare-city" type="text" placeholder="Kota kedua" />
+            <button id="compare-btn" class="search-btn" title="Bandingkan">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Suggestions for comparison -->
+          <ul id="compare-suggestions" class="suggestions" role="listbox" aria-label="Suggestions"></ul>
+        </div>
+        <div id="compare-result"></div>
+      </section>
+
+      <section class="trends-section glass-card">
+        <h3>Tren Suhu</h3>
+        <canvas id="trends-chart" width="400" height="200"></canvas>
+      </section>
+
+    <!-- Script -->
+    <script src="app.js"></script>
+  </body>
+</html>
