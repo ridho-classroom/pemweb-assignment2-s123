@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Cuaca Aisyah</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div id="loader" style="display:none">Memuat...</div>
+    <div class="container">
+        <div class="weather-container">
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-box" placeholder="Cari Kota" />
+        <button id="search-btn">Cari</button>
+        <ul id="suggestions"></ul>
+
+        <div class="toggles">
+        <!-- Toggle untuk unit suhu -->
+        <label class="toggle-switch">
+          <input type="checkbox" id="unit-toggle" />
+          <span class="slider"></span>
+        </label>
+        <span>°C / °F</span>
+
+        <!-- Toggle untuk tema -->
+         <label class="toggle-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+         </label>
+         <span>Tema Terang / Gelap</span>
+
+        <!-- Tombol Tambah ke Favorit -->
+        <button id="fav-btn" class="favorites-btn">
+            <span>❤</span> Tambah ke Favorit
+        </button>
+      </div>
+    </div>
+
+    <!-- Alert Box -->
+    <div class="alert-box" id="alertBox" style="display: none;">
+        ⚠️ Peringatan Cuaca
+    </div>
+
+    <!-- Main Info -->
+    <div class="main-info">
+        <div class="location-time">
+            <h1 id="cityName"> </h1>
+        
+        <div class="map-wrapper">
+          <button id="map-btn">🌍 Lihat Peta Cuaca</button>
+        </div>
+    </div>
+
+    <div class="weather-icon-desc">
+        <div class="icon" id="weatherIcon"></div>
+        <p id="description"> </p>
+      </div>
+
+      <div class="temperature-info">
+        <div class="temperature">
+          <span id="temperature"></span>
+        </div>
+        <p class="feels-like" id="feelsLike"> </p>
+        <p id="maxMin"></p>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat-item">
+            <div class="icon">💧</div>
+            <p id="humidity">Kelembapan: </p>
+        </div>
+        <div class="stat-item">
+            <div class="icon">🌬️</div>
+            <p id="wind">Angin</p>
+        </div>
+        <div class="stat-item">
+            <div class="icon">🌤️</div>
+            <p id="sun-info">Matahari Terbit : Matahari Terbenam </p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Forecast -->
+    <div class="forecast">
+      <h3>Prakiraan 5 Hari</h3>
+      <div class="forecast-items" id="forecast"></div>
+
+      <h3>Prakiraan Per Jam</h3>
+      <div class="hourly-forecast" id="hourly"></div>
+
+      <h3>Grafik Suhu Harian</h3>
+      <canvas id="hourlyChart"></canvas>
+
+    </div>
+
+    <!-- Favorites & History Section -->
+     <section class="extra-section">
+    
+      <!-- Kotak Favorit -->
+       <div class="box favorites-box">
+        <div class="box-header">
+          <h3>🌟 Favorit</h3>
+        </div>
+        <ul id="favoritesList"></ul>
+      </div>
+    
+      <!-- Kotak Riwayat -->
+      <div class="box history-box">
+        <div class="box-header">
+          <h3>📜 Riwayat Pencarian</h3>
+        </div>
+        <ul id="historyList"></ul>
+      </div>
+      </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
