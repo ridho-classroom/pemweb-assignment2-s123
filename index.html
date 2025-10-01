@@ -1,12 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Weather Dashboard - In Progress</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather Dashboard - Aplikasi cuaca modern dan responsif">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Weather Dashboard</h1>
-    <p>Project by Dhani Rahmat Maulana</p>
-    <p><strong>Work in Progress. The full site will be available soon.</strong></p>
+    <!-- Header dengan kontrol -->
+    <header class="header">
+        <div class="container">
+            <h1 class="app-title">
+                <svg class="weather-icon-title" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                Weather Dashboard
+            </h1>
+            <div class="controls">
+                <button id="theme-toggle" class="btn-toggle" aria-label="Toggle theme">
+                    <span class="toggle-icon">🌙</span>
+                </button>
+                <button id="unit-toggle" class="btn-toggle" aria-label="Toggle temperature unit">
+                    <span class="toggle-text">°F</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="city-input" 
+                        class="search-input" 
+                        placeholder="Cari kota..."
+                        aria-label="City search input"
+                    >
+                    <button id="search-btn" class="search-btn" aria-label="Search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Search History -->
+                <div id="search-history" class="search-history"></div>
+                
+                <!-- Error Message -->
+                <div id="error-message" class="error-message hidden"></div>
+            </section>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Memuat data cuaca...</p>
+            </div>
+
+            <!-- Current Weather Section -->
+            <section id="current-weather" class="current-weather hidden">
+                <div class="weather-card">
+                    <div class="weather-header">
+                        <div class="location-info">
+                            <h2 id="city-name" class="city-name">-</h2>
+                            <p id="current-date" class="current-date">-</p>
+                        </div>
+                        <button id="location-btn" class="location-btn" aria-label="Get current location">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="12" r="3"/>
+                                <line x1="12" y1="2" x2="12" y2="5"/>
+                                <line x1="12" y1="19" x2="12" y2="22"/>
+                                <line x1="2" y1="12" x2="5" y2="12"/>
+                                <line x1="19" y1="12" x2="22" y2="12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="weather-main">
+                        <div class="temperature-section">
+                            <img id="weather-icon" class="weather-icon-large" src="" alt="Weather icon">
+                            <div class="temperature-info">
+                                <h3 id="temperature" class="temperature">-°</h3>
+                                <p id="weather-description" class="weather-description">-</p>
+                            </div>
+                        </div>
+                        
+                        <div class="weather-details">
+                            <div class="detail-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                                </svg>
+                                <div class="detail-content">
+                                    <span class="detail-label">Feels Like</span>
+                                    <span id="feels-like" class="detail-value">-°</span>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                                </svg>
+                                <div class="detail-content">
+                                    <span class="detail-label">Kelembapan</span>
+                                    <span id="humidity" class="detail-value">-%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+                                </svg>
+                                <div class="detail-content">
+                                    <span class="detail-label">Kecepatan Angin</span>
+                                    <span id="wind-speed" class="detail-value">- m/s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5-Day Forecast Section -->
+            <section id="forecast-section" class="forecast-section hidden">
+                <h2 class="section-title">Ramalan 5 Hari</h2>
+                <div id="forecast-container" class="forecast-container"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Weather Dashboard. Data dari OpenWeatherMap API.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
