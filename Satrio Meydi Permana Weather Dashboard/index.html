@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather Dashboard">
+    <link rel="stylesheet" href="styles.css">
+    <title>Weather Dashboard</title>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Weather Dashboard</h1>
+            <div class="header-controls"> 
+                <button id="themeToggle" class="btn" aria-label="Toggle theme">Dark</button>
+                <button id="unitToggle" class="btn" aria-label="Toggle unit">F</button>
+                <button id="locationBtn" class="btn" aria-label="Get Current Location">My Location</button>
+            </div>
+        </header>
+        <div id="errorMessage" class="error-message" role="alert"></div>
+        
+        <section class="search-section" aria-label="Search for location">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="search for a city" aria-label="City search input"/> 
+
+                <button id="searchBtn" class="search-btn">Search</button>
+                    <div id="recentSearches" class="recent-searches" ></div>
+            </div>
+        </section>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Loading weather data</p>
+        </div>
+
+        <main id="weatherContent" style="display: none;">
+
+            <section class="current-weather" aria-label="Curent weather">
+            <h2 id="locationName" class="location-name"></h2>
+            <img id="weatherIcon" class="weather-icon-main" alt="Weather icon">
+            <div id="temperature" class="temperature"></div>
+            <div id="description" class="weather-description"></div>
+            <div class="weather-details"></div>
+            <div class="detail-item"></div>
+            <div class="detail-label">Feels Like</div>
+            <div id="feelslike" class="detail-value"></div>
+            <div class="detail-item"></div>
+            <div class="detail-label">Humidity</div>
+            <div id="humidity" class="detail-value"></div>
+            <div class="detail-item"></div>
+            <div class="detail-label">Wind Speed</div>
+            <div id="windSpeed" class="detail-value"></div>
+        
+        </section>
+
+        <section class="forecast-section" aria-label="5-day forecast">
+            <h2 class="section-title">5-day forecast</h2>
+            <div id="forecastGrid" class="forecast-grid"></div>
+        </section>
+
+        <section class="favorites-section" aria-label="favorite location">
+            <h2 class="section-title">Favorite Location</h2>
+            <div id="favoritesGrid" class="favorites-grid"></div>
+        </section>
+        </main>
+        <button id="addFavoriteBtn" class="add-favoritebtn" aria aria-label="add to favorites" style="display: none;">⭐</button>
+        <script src="script.js"></script>
+</body>
+</html>
